@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 
 import Navbar from './components/layout/Navbar'
+import SmoothScroll from './components/animation/SmoothScroll'
 
 import Home from './pages/Home/Home'
 import Technology from './pages/Technology/Technology'
@@ -12,7 +13,7 @@ import Contact from './pages/Contact/Contact'
 
 function App() {
   return (
-    <>
+    <SmoothScroll>
       <Navbar />
 
       <main>
@@ -26,7 +27,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
-    </>
+    </SmoothScroll>
   )
 }
 
