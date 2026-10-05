@@ -13,13 +13,17 @@ const concepts = [
 ]
 
 function Manifesto() {
-  const sectionRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
 
   useGSAP(
     () => {
       const words = gsap.utils.toArray<HTMLElement>(
         '.manifesto__word',
       )
+
+      if (!words.length) {
+        return
+      }
 
       gsap.set(words, {
         autoAlpha: 0,
@@ -69,6 +73,7 @@ function Manifesto() {
 
   return (
     <section
+      id="manifesto"
       ref={sectionRef}
       className="manifesto"
     >

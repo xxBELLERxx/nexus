@@ -1,0 +1,563 @@
+.technology {
+  position: relative;
+
+  /*
+   * Секция значительно выше viewport.
+   *
+   * Именно это пространство ScrollTrigger
+   * превращает в progress для animation timeline.
+   */
+  height: 500vh;
+
+  background:
+    radial-gradient(
+      circle at 75% 50%,
+      rgba(0, 200, 255, 0.07),
+      transparent 38%
+    ),
+    var(--color-bg);
+}
+
+.technology__stage {
+  position: relative;
+
+  width: 100%;
+  height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 120px var(--page-padding) 40px;
+
+  overflow: hidden;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.technology__header {
+  position: relative;
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+
+  letter-spacing: 0.12em;
+
+  color: var(--color-text-muted);
+}
+
+.technology__header span:first-child {
+  color: var(--color-accent);
+}
+
+/* =========================
+   INTRO
+========================= */
+
+.technology__intro {
+  position: absolute;
+
+  z-index: 5;
+
+  top: 20%;
+  left: var(--page-padding);
+
+  pointer-events: none;
+}
+
+.technology__eyebrow {
+  display: block;
+
+  margin-bottom: 24px;
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+
+  letter-spacing: 0.18em;
+
+  color: var(--color-accent);
+}
+
+.technology__intro h2 {
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: clamp(
+    48px,
+    6vw,
+    96px
+  );
+
+  font-weight: 400;
+
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+
+  text-transform: uppercase;
+}
+
+.technology__intro h2 span {
+  color: var(--color-accent);
+}
+
+/* =========================
+   SHOWCASE
+========================= */
+
+.technology__showcase {
+  position: absolute;
+  inset: 0;
+}
+
+.technology__visual {
+  position: absolute;
+
+  z-index: 1;
+
+  top: 50%;
+  right: 2%;
+
+  width: min(52vw, 760px);
+  aspect-ratio: 1;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.technology__visual-grid {
+  position: absolute;
+  inset: 8%;
+
+  border: 1px solid
+    rgba(0, 200, 255, 0.11);
+
+  background:
+    linear-gradient(
+      rgba(0, 200, 255, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 200, 255, 0.045) 1px,
+      transparent 1px
+    );
+
+  background-size: 42px 42px;
+
+  transform:
+    perspective(700px)
+    rotateX(65deg);
+
+  mask-image:
+    radial-gradient(
+      circle,
+      black 0%,
+      transparent 72%
+    );
+
+  will-change:
+    transform;
+}
+
+/* =========================
+   CORE
+========================= */
+
+.technology__orb {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 40%;
+  aspect-ratio: 1;
+
+  transform:
+    translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      rgba(77, 232, 255, 0.85),
+      rgba(0, 200, 255, 0.22) 25%,
+      rgba(0, 60, 100, 0.12) 50%,
+      transparent 72%
+    );
+
+  box-shadow:
+    0 0 50px rgba(0, 200, 255, 0.2),
+    inset 0 0 40px
+      rgba(0, 200, 255, 0.15);
+
+  will-change: transform;
+}
+
+.technology__orb-core {
+  position: absolute;
+
+  inset: 32%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      #ffffff 0%,
+      var(--color-accent-bright) 22%,
+      var(--color-accent) 65%,
+      transparent 100%
+    );
+
+  box-shadow:
+    0 0 25px
+      rgba(77, 232, 255, 0.9),
+    0 0 80px
+      rgba(0, 200, 255, 0.55);
+}
+
+/* =========================
+   RINGS
+========================= */
+
+.technology__orb-ring {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 130%;
+  height: 36%;
+
+  border: 1px solid
+    rgba(0, 200, 255, 0.35);
+
+  border-radius: 50%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(25deg);
+}
+
+.technology__orb-ring--two {
+  width: 160%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(-55deg);
+}
+
+.technology__orb-ring--three {
+  width: 190%;
+
+  transform:
+    translate(-50%, -50%)
+    rotate(80deg);
+}
+
+/* =========================
+   PANELS
+========================= */
+
+.technology__panels {
+  position: absolute;
+  inset: 0;
+
+  z-index: 4;
+
+  pointer-events: none;
+}
+
+.technology-panel {
+  position: absolute;
+
+  left: var(--page-padding);
+  bottom: 15%;
+
+  width: min(
+    500px,
+    40vw
+  );
+
+  padding: 28px;
+
+  border: 1px solid
+    var(--color-border);
+
+  background:
+    rgba(9, 13, 18, 0.76);
+
+  backdrop-filter: blur(20px);
+
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 20px 80px
+      rgba(0, 0, 0, 0.22);
+}
+
+/* =========================
+   PANEL TOP
+========================= */
+
+.technology-panel__top {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 68px;
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+
+  letter-spacing: 0.14em;
+
+  color: var(--color-accent);
+}
+
+/* =========================
+   PANEL BODY
+========================= */
+
+.technology-panel__body h3 {
+  margin: 0 0 18px;
+
+  font-family: var(--font-display);
+  font-size: clamp(
+    28px,
+    3vw,
+    46px
+  );
+
+  font-weight: 400;
+
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+.technology-panel__body p {
+  width: 90%;
+
+  margin: 0;
+
+  font-family: var(--font-body);
+  font-size: 14px;
+
+  line-height: 1.7;
+
+  color: var(--color-text-secondary);
+}
+
+/* =========================
+   METRIC
+========================= */
+
+.technology-panel__metric {
+  display: grid;
+
+  grid-template-columns:
+    auto auto;
+
+  column-gap: 10px;
+
+  align-items: end;
+
+  margin-top: 50px;
+}
+
+.technology-panel__metric-value {
+  font-family: var(--font-display);
+
+  font-size: 52px;
+  font-weight: 400;
+
+  line-height: 0.8;
+
+  letter-spacing: -0.04em;
+}
+
+.technology-panel__metric-unit {
+  font-family: var(--font-mono);
+  font-size: 10px;
+
+  color: var(--color-accent);
+}
+
+.technology-panel__metric-label {
+  grid-column: 1 / -1;
+
+  margin-top: 12px;
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+
+  letter-spacing: 0.12em;
+
+  color: var(--color-text-muted);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.technology__footer {
+  position: relative;
+
+  z-index: 10;
+
+  margin-top: auto;
+
+  display: grid;
+
+  grid-template-columns:
+    1fr auto auto;
+
+  gap: 30px;
+
+  align-items: center;
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+
+  letter-spacing: 0.12em;
+
+  color: var(--color-text-muted);
+}
+
+.technology__footer span:last-child {
+  color: var(--color-accent);
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.technology__progress {
+  width: 100%;
+  height: 1px;
+
+  overflow: hidden;
+
+  background: var(--color-border);
+}
+
+.technology__progress-fill {
+  width: 100%;
+  height: 100%;
+
+  background: var(--color-accent);
+
+  transform:
+    scaleX(0);
+
+  box-shadow:
+    0 0 10px
+      rgba(0, 200, 255, 0.8);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1000px) {
+  .technology__intro {
+    top: 18%;
+  }
+
+  .technology__visual {
+    right: -15%;
+
+    width: 75vw;
+
+    opacity: 0.7;
+  }
+
+  .technology-panel {
+    width: min(
+      460px,
+      55vw
+    );
+  }
+}
+
+@media (max-width: 700px) {
+  .technology {
+    height: 500vh;
+  }
+
+  .technology__stage {
+    padding: 110px 20px 28px;
+  }
+
+  .technology__header {
+    font-size: 8px;
+  }
+
+  .technology__intro {
+    position: absolute;
+
+    top: 18%;
+    left: 20px;
+  }
+
+  .technology__intro h2 {
+    font-size: clamp(
+      42px,
+      11vw,
+      68px
+    );
+  }
+
+  .technology__visual {
+    top: 43%;
+    right: -32%;
+
+    width: 100vw;
+
+    opacity: 0.58;
+  }
+
+  .technology-panel {
+    left: 20px;
+    right: 20px;
+    bottom: 12%;
+
+    width: auto;
+
+    padding: 22px;
+  }
+
+  .technology-panel__top {
+    margin-bottom: 42px;
+  }
+
+  .technology-panel__metric {
+    margin-top: 38px;
+  }
+
+  .technology-panel__metric-value {
+    font-size: 44px;
+  }
+
+  .technology__footer {
+    grid-template-columns:
+      1fr auto;
+
+    gap: 16px;
+  }
+
+  .technology__footer > span:nth-of-type(1) {
+    display: none;
+  }
+}
