@@ -1,12 +1,6 @@
 .technology {
   position: relative;
 
-  /*
-   * Секция значительно выше viewport.
-   *
-   * Именно это пространство ScrollTrigger
-   * превращает в progress для animation timeline.
-   */
   height: 500vh;
 
   background:
@@ -24,24 +18,23 @@
   width: 100%;
   height: 100svh;
 
-  display: flex;
-  flex-direction: column;
-
-  padding: 120px var(--page-padding) 40px;
+  padding:
+    120px
+    var(--page-padding)
+    40px;
 
   overflow: hidden;
 }
 
-/* =========================
+/* ==========================================
    HEADER
-========================= */
+========================================== */
 
 .technology__header {
   position: relative;
-  z-index: 10;
+  z-index: 20;
 
   display: flex;
-  align-items: center;
   justify-content: space-between;
 
   font-family: var(--font-mono);
@@ -56,30 +49,30 @@
   color: var(--color-accent);
 }
 
-/* =========================
+/* ==========================================
    INTRO
-========================= */
+========================================== */
 
 .technology__intro {
   position: absolute;
 
-  z-index: 5;
+  z-index: 10;
 
-  top: 20%;
+  top: 19%;
   left: var(--page-padding);
 
-  pointer-events: none;
+  width: min(680px, 52vw);
 }
 
 .technology__eyebrow {
   display: block;
 
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 
   font-family: var(--font-mono);
   font-size: 10px;
 
-  letter-spacing: 0.18em;
+  letter-spacing: 0.2em;
 
   color: var(--color-accent);
 }
@@ -89,9 +82,9 @@
 
   font-family: var(--font-display);
   font-size: clamp(
-    48px,
+    46px,
     6vw,
-    96px
+    94px
   );
 
   font-weight: 400;
@@ -106,22 +99,72 @@
   color: var(--color-accent);
 }
 
-/* =========================
+.technology__intro-description {
+  width: 320px;
+
+  margin-top: 28px;
+
+  font-size: 13px;
+  line-height: 1.7;
+
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================
+   TECHNOLOGY INDEX
+========================================== */
+
+.technology-index {
+  position: absolute;
+
+  z-index: 12;
+
+  top: 20%;
+  right: var(--page-padding);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.technology-index__item {
+  display: flex;
+
+  gap: 18px;
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+
+  letter-spacing: 0.14em;
+
+  color: var(--color-text-muted);
+}
+
+.technology-index__item span:first-child {
+  width: 22px;
+}
+
+/* ==========================================
    SHOWCASE
-========================= */
+========================================== */
 
 .technology__showcase {
   position: absolute;
   inset: 0;
 }
 
+/* ==========================================
+   VISUAL / CORE
+========================================== */
+
 .technology__visual {
   position: absolute;
 
-  z-index: 1;
+  z-index: 2;
 
-  top: 50%;
-  right: 2%;
+  top: 53%;
+  right: 3%;
 
   width: min(52vw, 760px);
   aspect-ratio: 1;
@@ -131,16 +174,13 @@
   pointer-events: none;
 }
 
-/* =========================
-   GRID
-========================= */
-
 .technology__visual-grid {
   position: absolute;
+
   inset: 8%;
 
   border: 1px solid
-    rgba(0, 200, 255, 0.11);
+    rgba(0, 200, 255, 0.1);
 
   background:
     linear-gradient(
@@ -166,13 +206,8 @@
       transparent 72%
     );
 
-  will-change:
-    transform;
+  will-change: transform;
 }
-
-/* =========================
-   CORE
-========================= */
 
 .technology__orb {
   position: absolute;
@@ -180,26 +215,27 @@
   top: 50%;
   left: 50%;
 
-  width: 40%;
+  width: 38%;
   aspect-ratio: 1;
+
+  border-radius: 50%;
 
   transform:
     translate(-50%, -50%);
-
-  border-radius: 50%;
 
   background:
     radial-gradient(
       circle at 35% 30%,
       rgba(77, 232, 255, 0.85),
-      rgba(0, 200, 255, 0.22) 25%,
-      rgba(0, 60, 100, 0.12) 50%,
+      rgba(0, 200, 255, 0.2) 25%,
+      rgba(0, 60, 100, 0.08) 50%,
       transparent 72%
     );
 
   box-shadow:
-    0 0 50px rgba(0, 200, 255, 0.2),
-    inset 0 0 40px
+    0 0 55px
+      rgba(0, 200, 255, 0.2),
+    inset 0 0 45px
       rgba(0, 200, 255, 0.15);
 
   will-change: transform;
@@ -208,7 +244,7 @@
 .technology__orb-core {
   position: absolute;
 
-  inset: 32%;
+  inset: 31%;
 
   border-radius: 50%;
 
@@ -227,10 +263,6 @@
     0 0 80px
       rgba(0, 200, 255, 0.55);
 }
-
-/* =========================
-   RINGS
-========================= */
 
 .technology__orb-ring {
   position: absolute;
@@ -267,15 +299,29 @@
     rotate(80deg);
 }
 
-/* =========================
+.technology__visual-label {
+  position: absolute;
+
+  right: 15%;
+  bottom: 16%;
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+
+  letter-spacing: 0.18em;
+
+  color: var(--color-text-muted);
+}
+
+/* ==========================================
    PANELS
-========================= */
+========================================== */
 
 .technology__panels {
   position: absolute;
   inset: 0;
 
-  z-index: 4;
+  z-index: 8;
 
   pointer-events: none;
 }
@@ -284,104 +330,130 @@
   position: absolute;
 
   left: var(--page-padding);
-  bottom: 15%;
+
+  /*
+   * Главное изменение:
+   * карточка опущена вниз и больше
+   * не пересекается с заголовком.
+   */
+  bottom: 11%;
 
   width: min(
-    500px,
-    40vw
+    470px,
+    34vw
   );
 
-  padding: 28px;
+  min-height: 320px;
+
+  padding: 26px;
 
   border: 1px solid
     var(--color-border);
 
   background:
-    rgba(9, 13, 18, 0.76);
+    rgba(8, 12, 17, 0.82);
 
-  backdrop-filter: blur(20px);
+  backdrop-filter:
+    blur(20px);
 
-  -webkit-backdrop-filter: blur(20px);
+  -webkit-backdrop-filter:
+    blur(20px);
 
   box-shadow:
-    0 20px 80px
-      rgba(0, 0, 0, 0.22);
+    0 25px 100px
+      rgba(0, 0, 0, 0.28);
+
+  will-change:
+    transform,
+    opacity;
 }
 
-/* =========================
-   PANEL TOP
-========================= */
+/* ==========================================
+   PANEL CONTENT
+========================================== */
 
 .technology-panel__top {
   display: flex;
   justify-content: space-between;
 
-  margin-bottom: 68px;
+  margin-bottom: 55px;
 
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
 
   letter-spacing: 0.14em;
 
   color: var(--color-accent);
 }
 
-/* =========================
-   PANEL BODY
-========================= */
+.technology-panel__category {
+  display: block;
+
+  margin-bottom: 12px;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+
+  letter-spacing: 0.16em;
+
+  color: var(--color-text-muted);
+}
 
 .technology-panel__body h3 {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
 
   font-family: var(--font-display);
+
   font-size: clamp(
-    28px,
-    3vw,
-    46px
+    26px,
+    2.8vw,
+    42px
   );
 
   font-weight: 400;
 
   line-height: 0.95;
+
   letter-spacing: -0.045em;
 }
 
 .technology-panel__body p {
-  width: 90%;
+  width: min(390px, 100%);
 
   margin: 0;
 
-  font-family: var(--font-body);
-  font-size: 14px;
+  font-size: 13px;
 
   line-height: 1.7;
 
   color: var(--color-text-secondary);
 }
 
-/* =========================
+/* ==========================================
    METRIC
-========================= */
+========================================== */
 
 .technology-panel__metric {
-  display: grid;
+  display: flex;
 
-  grid-template-columns:
-    auto auto;
+  justify-content: space-between;
+  align-items: flex-end;
 
-  column-gap: 10px;
+  margin-top: 42px;
+}
 
-  align-items: end;
+.technology-panel__metric > div {
+  display: flex;
 
-  margin-top: 50px;
+  align-items: flex-end;
+
+  gap: 10px;
 }
 
 .technology-panel__metric-value {
   font-family: var(--font-display);
 
-  font-size: 52px;
-  font-weight: 400;
-
+  font-size: 48px;
   line-height: 0.8;
 
   letter-spacing: -0.04em;
@@ -389,46 +461,46 @@
 
 .technology-panel__metric-unit {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
 
   color: var(--color-accent);
 }
 
 .technology-panel__metric-label {
-  grid-column: 1 / -1;
-
-  margin-top: 12px;
-
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 8px;
 
   letter-spacing: 0.12em;
 
   color: var(--color-text-muted);
+
+  text-align: right;
 }
 
-/* =========================
+/* ==========================================
    FOOTER
-========================= */
+========================================== */
 
 .technology__footer {
-  position: relative;
+  position: absolute;
 
-  z-index: 10;
+  z-index: 20;
 
-  margin-top: auto;
+  left: var(--page-padding);
+  right: var(--page-padding);
+  bottom: 40px;
 
   display: grid;
 
   grid-template-columns:
     1fr auto auto;
 
-  gap: 30px;
-
   align-items: center;
 
+  gap: 28px;
+
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
 
   letter-spacing: 0.12em;
 
@@ -439,17 +511,13 @@
   color: var(--color-accent);
 }
 
-/* =========================
-   PROGRESS
-========================= */
-
 .technology__progress {
   width: 100%;
   height: 1px;
 
-  overflow: hidden;
-
   background: var(--color-border);
+
+  overflow: hidden;
 }
 
 .technology__progress-fill {
@@ -458,106 +526,107 @@
 
   background: var(--color-accent);
 
-  transform:
-    scaleX(0);
+  transform: scaleX(0);
+
+  transform-origin: left center;
 
   box-shadow:
     0 0 10px
       rgba(0, 200, 255, 0.8);
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* ==========================================
+   MOBILE
+========================================== */
 
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
   .technology__intro {
-    top: 18%;
+    left: 20px;
+
+    width: 70vw;
+  }
+
+  .technology-index {
+    display: none;
   }
 
   .technology__visual {
     right: -15%;
 
-    width: 75vw;
+    width: 82vw;
 
-    opacity: 0.7;
+    opacity: 0.65;
   }
 
   .technology-panel {
+    left: 20px;
+    bottom: 11%;
+
     width: min(
       460px,
-      55vw
+      calc(100vw - 40px)
     );
   }
 }
 
-@media (max-width: 700px) {
-  .technology {
-    height: 500vh;
-  }
-
+@media (max-width: 600px) {
   .technology__stage {
-    padding: 110px 20px 28px;
-  }
-
-  .technology__header {
-    font-size: 8px;
+    padding:
+      110px
+      20px
+      28px;
   }
 
   .technology__intro {
-    position: absolute;
-
-    top: 18%;
+    top: 17%;
     left: 20px;
+
+    width: calc(100vw - 40px);
   }
 
   .technology__intro h2 {
     font-size: clamp(
-      42px,
-      11vw,
-      68px
+      40px,
+      10vw,
+      64px
     );
   }
 
   .technology__visual {
-    top: 43%;
-    right: -32%;
+    top: 49%;
+    right: -30%;
 
-    width: 100vw;
-
-    opacity: 0.58;
+    width: 110vw;
   }
 
   .technology-panel {
-    left: 20px;
-    right: 20px;
-    bottom: 12%;
-
-    width: auto;
+    min-height: 280px;
 
     padding: 22px;
   }
 
   .technology-panel__top {
-    margin-bottom: 42px;
+    margin-bottom: 38px;
   }
 
   .technology-panel__metric {
-    margin-top: 38px;
+    margin-top: 32px;
   }
 
-  .technology-panel__metric-value {
-    font-size: 44px;
+  .technology-panel__metric-label {
+    display: none;
   }
 
   .technology__footer {
+    left: 20px;
+    right: 20px;
+    bottom: 24px;
+
     grid-template-columns:
       1fr auto;
-
-    gap: 16px;
   }
 
-  .technology__footer > span:nth-of-type(1) {
+  .technology__footer span:first-of-type {
     display: none;
   }
 }

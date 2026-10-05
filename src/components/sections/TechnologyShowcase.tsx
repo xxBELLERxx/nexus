@@ -16,20 +16,26 @@ function TechnologyShowcase() {
         '.technology-panel',
       )
 
-      if (!panels.length || !sectionRef.current) {
+      const numbers = gsap.utils.toArray<HTMLElement>(
+        '.technology-index__item',
+      )
+
+      if (
+        !panels.length ||
+        !sectionRef.current ||
+        !stageRef.current
+      ) {
         return
       }
 
-      /*
-       * Начальное состояние.
-       *
-       * Все панели скрыты,
-       * первая становится видимой.
-       */
       gsap.set(panels, {
         autoAlpha: 0,
         y: 40,
-        scale: 0.96,
+        scale: 0.97,
+      })
+
+      gsap.set(numbers, {
+        color: 'var(--color-text-muted)',
       })
 
       gsap.set(panels[0], {
@@ -38,27 +44,23 @@ function TechnologyShowcase() {
         scale: 1,
       })
 
-      /*
-       * Основной ScrollTrigger timeline.
-       */
+      gsap.set(numbers[0], {
+        color: 'var(--color-accent)',
+      })
+
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-
           start: 'top top',
-
           end: `+=${(panels.length - 1) * 1200}`,
-
           pin: stageRef.current,
-
           scrub: 1,
-
           anticipatePin: 1,
         },
       })
 
       /*
-       * Общая progress bar.
+       * Progress line.
        */
       timeline.fromTo(
         '.technology__progress-fill',
@@ -75,39 +77,7 @@ function TechnologyShowcase() {
       )
 
       /*
-       * Смена технологий.
-       */
-      panels.slice(1).forEach(
-        (panel, index) => {
-          const previousPanel = panels[index]
-
-          timeline
-            .to(previousPanel, {
-              autoAlpha: 0,
-              y: -50,
-              scale: 1.04,
-              duration: 1,
-              ease: 'power2.inOut',
-            })
-
-            .to(
-              panel,
-              {
-                autoAlpha: 1,
-                y: 0,
-                scale: 1,
-                duration: 1,
-                ease: 'power2.out',
-              },
-              '<0.15',
-            )
-        },
-      )
-
-      /*
-       * Анимация центрального Core.
-       *
-       * Он вращается по мере движения timeline.
+       * Core rotation.
        */
       timeline.to(
         '.technology__orb',
@@ -120,17 +90,72 @@ function TechnologyShowcase() {
       )
 
       /*
-       * Лёгкое движение сетки.
+       * Grid movement.
        */
       timeline.to(
         '.technology__visual-grid',
         {
           rotationZ: 8,
-          scale: 1.1,
+          scale: 1.08,
           duration: panels.length - 1,
           ease: 'none',
         },
         0,
+      )
+
+      /*
+       * Panel transitions.
+       */
+      panels.slice(1).forEach(
+        (panel, index) => {
+          const previousPanel = panels[index]
+          const previousNumber = numbers[index]
+          const currentNumber = numbers[index + 1]
+
+          timeline
+            .to(
+              previousPanel,
+              {
+                autoAlpha: 0,
+                y: -35,
+                scale: 1.03,
+                duration: 1,
+                ease: 'power2.inOut',
+              },
+            )
+
+            .to(
+              panel,
+              {
+                autoAlpha: 1,
+                y: 0,
+                scale: 1,
+                duration: 1,
+                ease: 'power2.out',
+              },
+              '<0.15',
+            )
+
+            .to(
+              previousNumber,
+              {
+                color:
+                  'var(--color-text-muted)',
+                duration: 0.4,
+              },
+              '<',
+            )
+
+            .to(
+              currentNumber,
+              {
+                color:
+                  'var(--color-accent)',
+                duration: 0.4,
+              },
+              '<',
+            )
+        },
       )
     },
     {
@@ -147,8 +172,6 @@ function TechnologyShowcase() {
         ref={stageRef}
         className="technology__stage"
       >
-        {/* HEADER */}
-
         <header className="technology__header">
           <span>02</span>
 
@@ -156,8 +179,6 @@ function TechnologyShowcase() {
             THE NEXUS TECHNOLOGY
           </span>
         </header>
-
-        {/* INTRO */}
 
         <div className="technology__intro">
           <span className="technology__eyebrow">
@@ -171,14 +192,33 @@ function TechnologyShowcase() {
             <br />
             <span>OF TOMORROW.</span>
           </h2>
+
+          <p className="technology__intro-description">
+            Four disciplines. One interconnected
+            technological ecosystem.
+          </p>
         </div>
 
-        {/* SHOWCASE */}
+        <div className="technology-index">
+          {technologies.map(
+            (technology) => (
+              <div
+                key={technology.number}
+                className="technology-index__item"
+              >
+                <span>
+                  {technology.number}
+                </span>
+
+                <span>
+                  {technology.shortName}
+                </span>
+              </div>
+            ),
+          )}
+        </div>
 
         <div className="technology__showcase">
-
-          {/* VISUAL */}
-
           <div className="technology__visual">
             <div className="technology__orb">
               <div className="technology__orb-core" />
@@ -191,9 +231,11 @@ function TechnologyShowcase() {
             </div>
 
             <div className="technology__visual-grid" />
-          </div>
 
-          {/* PANELS */}
+            <div className="technology__visual-label">
+              NEXUS CORE
+            </div>
+          </div>
 
           <div className="technology__panels">
             {technologies.map(
@@ -213,6 +255,10 @@ function TechnologyShowcase() {
                   </div>
 
                   <div className="technology-panel__body">
+                    <span className="technology-panel__category">
+                      NEXUS TECHNOLOGY
+                    </span>
+
                     <h3>
                       {technology.name}
                     </h3>
@@ -223,13 +269,15 @@ function TechnologyShowcase() {
                   </div>
 
                   <div className="technology-panel__metric">
-                    <span className="technology-panel__metric-value">
-                      {technology.metric}
-                    </span>
+                    <div>
+                      <span className="technology-panel__metric-value">
+                        {technology.metric}
+                      </span>
 
-                    <span className="technology-panel__metric-unit">
-                      {technology.metricLabel}
-                    </span>
+                      <span className="technology-panel__metric-unit">
+                        {technology.metricLabel}
+                      </span>
+                    </div>
 
                     <span className="technology-panel__metric-label">
                       {technology.label}
@@ -241,8 +289,6 @@ function TechnologyShowcase() {
           </div>
         </div>
 
-        {/* FOOTER */}
-
         <footer className="technology__footer">
           <div className="technology__progress">
             <div className="technology__progress-fill" />
@@ -252,9 +298,7 @@ function TechnologyShowcase() {
             SCROLL TO EXPLORE
           </span>
 
-          <span>
-            04 / 07
-          </span>
+          <span>03 / 07</span>
         </footer>
       </div>
     </section>

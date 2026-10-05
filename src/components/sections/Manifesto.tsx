@@ -6,10 +6,34 @@ import { gsap } from '../../lib/gsap'
 import './Manifesto.css'
 
 const concepts = [
-  'HUMANITY',
-  'INTELLIGENCE',
-  'CONNECTION',
-  'EVOLUTION',
+  {
+    word: 'HUMANITY',
+    label: 'THE FOUNDATION',
+    description:
+      'Technology begins with the people it is designed to serve.',
+    image: '/images/manifesto/humanity.webp',
+  },
+  {
+    word: 'INTELLIGENCE',
+    label: 'THE MIND',
+    description:
+      'Systems that learn, adapt and extend human capability.',
+    image: '/images/manifesto/intelligence.webp',
+  },
+  {
+    word: 'CONNECTION',
+    label: 'THE NETWORK',
+    description:
+      'Machines, people and information brought into one ecosystem.',
+    image: '/images/manifesto/connection.webp',
+  },
+  {
+    word: 'EVOLUTION',
+    label: 'THE NEXT STEP',
+    description:
+      'Continuous progress without a defined final state.',
+    image: '/images/manifesto/evolution.webp',
+  },
 ]
 
 function Manifesto() {
@@ -21,50 +45,146 @@ function Manifesto() {
         '.manifesto__word',
       )
 
-      if (!words.length) {
+      const images = gsap.utils.toArray<HTMLElement>(
+        '.manifesto__image',
+      )
+
+      const descriptions = gsap.utils.toArray<HTMLElement>(
+        '.manifesto__description',
+      )
+
+      if (
+        !words.length ||
+        !images.length ||
+        !descriptions.length
+      ) {
         return
       }
 
+      /*
+       * Initial state.
+       */
       gsap.set(words, {
         autoAlpha: 0,
         y: 50,
       })
 
-      gsap.set(words[0], {
-        autoAlpha: 1,
-        y: 0,
+      gsap.set(images, {
+        autoAlpha: 0,
+        scale: 1.08,
       })
+
+      gsap.set(descriptions, {
+        autoAlpha: 0,
+        y: 20,
+      })
+
+      gsap.set(
+        [words[0], images[0], descriptions[0]],
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+        },
+      )
 
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: '+=3000',
+          end: '+=3600',
           scrub: 1,
           pin: '.manifesto__stage',
           anticipatePin: 1,
         },
       })
 
-      words.slice(1).forEach((word, index) => {
+      /*
+       * Each concept becomes a complete visual state.
+       */
+      concepts.slice(1).forEach((_, index) => {
         const previousWord = words[index]
+        const currentWord = words[index + 1]
+
+        const previousImage = images[index]
+        const currentImage = images[index + 1]
+
+        const previousDescription =
+          descriptions[index]
+
+        const currentDescription =
+          descriptions[index + 1]
 
         timeline
           .to(previousWord, {
             autoAlpha: 0,
-            y: -50,
+            y: -45,
             duration: 1,
           })
+
           .to(
-            word,
+            currentWord,
             {
               autoAlpha: 1,
               y: 0,
               duration: 1,
             },
-            '<0.2',
+            '<0.15',
+          )
+
+          .to(
+            previousImage,
+            {
+              autoAlpha: 0,
+              scale: 0.96,
+              duration: 1,
+            },
+            '<',
+          )
+
+          .to(
+            currentImage,
+            {
+              autoAlpha: 1,
+              scale: 1,
+              duration: 1,
+            },
+            '<0.15',
+          )
+
+          .to(
+            previousDescription,
+            {
+              autoAlpha: 0,
+              y: -15,
+              duration: 0.7,
+            },
+            '<',
+          )
+
+          .to(
+            currentDescription,
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 0.7,
+            },
+            '<0.15',
           )
       })
+
+      /*
+       * Slow movement of the visual image area.
+       */
+      timeline.to(
+        '.manifesto__visual-inner',
+        {
+          y: -30,
+          duration: concepts.length - 1,
+          ease: 'none',
+        },
+        0,
+      )
     },
     {
       scope: sectionRef,
@@ -78,40 +198,85 @@ function Manifesto() {
       className="manifesto"
     >
       <div className="manifesto__stage">
-        <div className="manifesto__header">
+        <header className="manifesto__header">
           <span>01</span>
-
           <span>THE NEXUS MANIFESTO</span>
-        </div>
+        </header>
 
-        <div className="manifesto__content">
-          <p className="manifesto__eyebrow">
-            WE DON'T PREDICT THE FUTURE.
-          </p>
+        <div className="manifesto__layout">
+          <div className="manifesto__content">
+            <p className="manifesto__eyebrow">
+              WE DON'T PREDICT THE FUTURE.
+            </p>
 
-          <h2 className="manifesto__title">
-            WE ENGINEER
-            <br />
-            WHAT COMES
-          </h2>
+            <h2 className="manifesto__title">
+              WE ENGINEER
+              <br />
+              WHAT COMES
+            </h2>
 
-          <div className="manifesto__word-container">
-            {concepts.map((concept) => (
-              <span
-                key={concept}
-                className="manifesto__word"
-              >
-                {concept}
-              </span>
-            ))}
+            <div className="manifesto__word-container">
+              {concepts.map((concept) => (
+                <span
+                  key={concept.word}
+                  className="manifesto__word"
+                >
+                  {concept.word}
+                </span>
+              ))}
+            </div>
+
+            <div className="manifesto__description-container">
+              {concepts.map((concept) => (
+                <div
+                  key={concept.label}
+                  className="manifesto__description"
+                >
+                  <span className="manifesto__description-label">
+                    {concept.label}
+                  </span>
+
+                  <p>
+                    {concept.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="manifesto__visual">
+            <div className="manifesto__visual-grid" />
+
+            <div className="manifesto__visual-inner">
+              {concepts.map((concept) => (
+                <div
+                  key={concept.image}
+                  className="manifesto__image"
+                >
+                  <img
+                    src={concept.image}
+                    alt=""
+                  />
+
+                  <div className="manifesto__image-overlay" />
+                </div>
+              ))}
+            </div>
+
+            <div className="manifesto__visual-meta">
+              <span>NX / MANIFESTO</span>
+              <span>VISUAL SYSTEM</span>
+            </div>
           </div>
         </div>
 
-        <div className="manifesto__footer">
+        <footer className="manifesto__footer">
           <span>SCROLL TO CONTINUE</span>
 
+          <div className="manifesto__footer-line" />
+
           <span>02 / 07</span>
-        </div>
+        </footer>
       </div>
     </section>
   )
