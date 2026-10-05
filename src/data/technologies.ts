@@ -11,7 +11,7 @@ export interface Technology {
 export const technologies: Technology[] = [
   {
     number: '01',
-    name: 'ARTIFICIAL INTELLIGENCE',
+    name: 'AI SYSTEMS',
     shortName: 'AI',
     description:
       'Adaptive intelligence systems designed to understand, learn and act.',
