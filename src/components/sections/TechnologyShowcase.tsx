@@ -3,6 +3,7 @@ import { useGSAP } from '@gsap/react'
 
 import { gsap } from '../../lib/gsap'
 import { technologies } from '../../data/technologies'
+import NexusCore from './NexusCore'
 
 import './TechnologyShowcase.css'
 
@@ -70,19 +71,6 @@ function TechnologyShowcase() {
         },
         {
           scaleX: 1,
-          duration: panels.length - 1,
-          ease: 'none',
-        },
-        0,
-      )
-
-      /*
-       * Core rotation.
-       */
-      timeline.to(
-        '.technology__orb',
-        {
-          rotation: 180,
           duration: panels.length - 1,
           ease: 'none',
         },
@@ -220,22 +208,14 @@ function TechnologyShowcase() {
 
         <div className="technology__showcase">
           <div className="technology__visual">
-            <div className="technology__orb">
-              <div className="technology__orb-core" />
+  <NexusCore />
 
-              <div className="technology__orb-ring technology__orb-ring--one" />
+  <div className="technology__visual-grid" />
 
-              <div className="technology__orb-ring technology__orb-ring--two" />
-
-              <div className="technology__orb-ring technology__orb-ring--three" />
-            </div>
-
-            <div className="technology__visual-grid" />
-
-            <div className="technology__visual-label">
-              NEXUS CORE
-            </div>
-          </div>
+  <div className="technology__visual-label">
+    NEXUS CORE
+  </div>
+</div>
 
           <div className="technology__panels">
             {technologies.map(
