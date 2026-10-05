@@ -5,34 +5,36 @@ import { gsap } from '../../lib/gsap'
 
 import './Manifesto.css'
 
+const IMAGE_BASE = `${import.meta.env.BASE_URL}images/manifesto`
+
 const concepts = [
   {
     word: 'HUMANITY',
     label: 'THE FOUNDATION',
     description:
       'Technology begins with the people it is designed to serve.',
-    image: '/images/manifesto/humanity.webp',
+    image: `${IMAGE_BASE}/humanity.webp`,
   },
   {
     word: 'INTELLIGENCE',
     label: 'THE MIND',
     description:
       'Systems that learn, adapt and extend human capability.',
-    image: '/images/manifesto/intelligence.webp',
+    image: `${IMAGE_BASE}/intelligence.webp`,
   },
   {
     word: 'CONNECTION',
     label: 'THE NETWORK',
     description:
       'Machines, people and information brought into one ecosystem.',
-    image: '/images/manifesto/connection.webp',
+    image: `${IMAGE_BASE}/connection.webp`,
   },
   {
     word: 'EVOLUTION',
     label: 'THE NEXT STEP',
     description:
       'Continuous progress without a defined final state.',
-    image: '/images/manifesto/evolution.webp',
+    image: `${IMAGE_BASE}/evolution.webp`,
   },
 ]
 
