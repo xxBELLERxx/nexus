@@ -10,74 +10,311 @@ function Hero() {
 
   useGSAP(
     () => {
-      const timeline = gsap.timeline({
-        defaults: {
-          ease: 'power3.out',
-        },
-      })
+      const section = heroRef.current
 
-      timeline
-        // Фоновое изображение
-        .from('.hero__background', {
-          scale: 1.12,
-          opacity: 0,
-          duration: 2,
+      if (!section) {
+        return
+      }
+
+      const prefersReducedMotion = window.matchMedia(
+        '(prefers-reduced-motion: reduce)',
+      ).matches
+
+      const supportsHover = window.matchMedia(
+        '(hover: hover)',
+      ).matches
+
+      /*
+       * ==========================================
+       * INTRO ANIMATION
+       * ==========================================
+       */
+
+      if (!prefersReducedMotion) {
+        const timeline = gsap.timeline({
+          defaults: {
+            ease: 'power3.out',
+          },
         })
 
-        // Верхний label
-        .from(
-          '.hero__eyebrow',
-          {
-            y: 25,
+        timeline
+          .from('.hero__background', {
+            scale: 1.12,
             opacity: 0,
-            duration: 0.7,
+            duration: 2,
+          })
+
+          .from(
+            '.hero__eyebrow',
+            {
+              y: 25,
+              opacity: 0,
+              duration: 0.7,
+            },
+            '-=1.2',
+          )
+
+          .from(
+            '.hero__title-line',
+            {
+              y: 80,
+              opacity: 0,
+              duration: 1,
+              stagger: 0.12,
+            },
+            '-=0.5',
+          )
+
+          .from(
+            '.hero__description',
+            {
+              y: 25,
+              opacity: 0,
+              duration: 0.7,
+            },
+            '-=0.45',
+          )
+
+          .from(
+            '.hero__button',
+            {
+              y: 20,
+              opacity: 0,
+              duration: 0.6,
+            },
+            '-=0.25',
+          )
+
+          .from(
+            '.hero__meta',
+            {
+              opacity: 0,
+              duration: 0.8,
+            },
+            '-=0.2',
+          )
+
+        /*
+         * ==========================================
+         * HERO SCROLL PARALLAX
+         * ==========================================
+         */
+
+        gsap.to('.hero__background', {
+          yPercent: 10,
+          ease: 'none',
+
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
           },
-          '-=1.2',
+        })
+      }
+
+      /*
+       * ==========================================
+       * MOUSE PARALLAX
+       * ==========================================
+       */
+
+      if (!prefersReducedMotion && supportsHover) {
+        const background = section.querySelector<HTMLElement>(
+          '.hero__background',
         )
 
-        // Заголовок
-        .from(
-          '.hero__title-line',
-          {
-            y: 80,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.12,
-          },
-          '-=0.5',
+        const content = section.querySelector<HTMLElement>(
+          '.hero__content',
         )
 
-        // Описание
-        .from(
-          '.hero__description',
-          {
-            y: 25,
-            opacity: 0,
-            duration: 0.7,
-          },
-          '-=0.45',
-        )
-
-        // Кнопка
-        .from(
+        const button = section.querySelector<HTMLButtonElement>(
           '.hero__button',
-          {
-            y: 20,
-            opacity: 0,
-            duration: 0.6,
-          },
-          '-=0.25',
         )
 
-        // Нижняя информация
-        .from(
-          '.hero__meta',
+        if (!background || !content || !button) {
+          return
+        }
+
+        /*
+         * quickTo() идеально подходит для mousemove,
+         * когда одно и то же свойство обновляется
+         * очень часто.
+         */
+        const backgroundX = gsap.quickTo(
+          background,
+          'x',
           {
-            opacity: 0,
             duration: 0.8,
+            ease: 'power3.out',
           },
-          '-=0.2',
         )
+
+        const backgroundY = gsap.quickTo(
+          background,
+          'y',
+          {
+            duration: 0.8,
+            ease: 'power3.out',
+          },
+        )
+
+        const contentX = gsap.quickTo(
+          content,
+          'x',
+          {
+            duration: 1,
+            ease: 'power3.out',
+          },
+        )
+
+        const contentY = gsap.quickTo(
+          content,
+          'y',
+          {
+            duration: 1,
+            ease: 'power3.out',
+          },
+        )
+
+        /*
+         * ==========================================
+         * HERO POINTER
+         * ==========================================
+         */
+
+        const handlePointerMove = (
+          event: PointerEvent,
+        ) => {
+          const x =
+            event.clientX / window.innerWidth - 0.5
+
+          const y =
+            event.clientY / window.innerHeight - 0.5
+
+          /*
+           * Фон двигается сильнее.
+           */
+          backgroundX(x * -22)
+          backgroundY(y * -14)
+
+          /*
+           * Контент двигается значительно слабее.
+           */
+          contentX(x * 7)
+          contentY(y * 5)
+        }
+
+        const resetHero = () => {
+          backgroundX(0)
+          backgroundY(0)
+
+          contentX(0)
+          contentY(0)
+        }
+
+        section.addEventListener(
+          'pointermove',
+          handlePointerMove,
+        )
+
+        section.addEventListener(
+          'pointerleave',
+          resetHero,
+        )
+
+        /*
+         * ==========================================
+         * MAGNETIC BUTTON
+         * ==========================================
+         */
+
+        const buttonX = gsap.quickTo(
+          button,
+          'x',
+          {
+            duration: 0.35,
+            ease: 'power3.out',
+          },
+        )
+
+        const buttonY = gsap.quickTo(
+          button,
+          'y',
+          {
+            duration: 0.35,
+            ease: 'power3.out',
+          },
+        )
+
+        const handleButtonMove = (
+          event: PointerEvent,
+        ) => {
+          const rect =
+            button.getBoundingClientRect()
+
+          const x =
+            event.clientX -
+            rect.left -
+            rect.width / 2
+
+          const y =
+            event.clientY -
+            rect.top -
+            rect.height / 2
+
+          /*
+           * Коэффициент 0.18 означает,
+           * что кнопка двигается только на 18%
+           * от положения курсора внутри неё.
+           */
+          buttonX(x * 0.18)
+          buttonY(y * 0.18)
+        }
+
+        const resetButton = () => {
+          buttonX(0)
+          buttonY(0)
+        }
+
+        button.addEventListener(
+          'pointermove',
+          handleButtonMove,
+        )
+
+        button.addEventListener(
+          'pointerleave',
+          resetButton,
+        )
+
+        /*
+         * ==========================================
+         * CLEANUP
+         * ==========================================
+         */
+
+        return () => {
+          section.removeEventListener(
+            'pointermove',
+            handlePointerMove,
+          )
+
+          section.removeEventListener(
+            'pointerleave',
+            resetHero,
+          )
+
+          button.removeEventListener(
+            'pointermove',
+            handleButtonMove,
+          )
+
+          button.removeEventListener(
+            'pointerleave',
+            resetButton,
+          )
+        }
+      }
     },
     {
       scope: heroRef,

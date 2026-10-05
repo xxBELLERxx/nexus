@@ -9,26 +9,32 @@
   overflow: hidden;
 
   background: var(--color-bg);
+
+  isolation: isolate;
 }
 
-/* =========================
+/* ==========================================
    BACKGROUND
-========================= */
+========================================== */
 
 .hero__background {
   position: absolute;
-  inset: 0;
+  inset: -3%;
 
   background-image: url('/images/nexus-hero.png');
   background-size: cover;
   background-position: center;
 
   will-change: transform;
+
+  transform: translate3d(0, 0, 0);
 }
 
 .hero__overlay {
   position: absolute;
   inset: 0;
+
+  z-index: 1;
 
   background:
     linear-gradient(
@@ -44,11 +50,15 @@
       rgba(5, 7, 10, 0) 45%,
       rgba(5, 7, 10, 0.45) 100%
     );
+
+  pointer-events: none;
 }
 
 .hero__noise {
   position: absolute;
   inset: 0;
+
+  z-index: 2;
 
   pointer-events: none;
 
@@ -58,13 +68,14 @@
     url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
 }
 
-/* =========================
+/* ==========================================
    CONTENT
-========================= */
+========================================== */
 
 .hero__content {
   position: relative;
-  z-index: 2;
+
+  z-index: 5;
 
   width: min(760px, 90vw);
 
@@ -75,6 +86,8 @@
   );
 
   padding-top: 30px;
+
+  will-change: transform;
 }
 
 .hero__eyebrow {
@@ -96,6 +109,7 @@
   flex-direction: column;
 
   font-family: var(--font-display);
+
   font-size: clamp(
     54px,
     7vw,
@@ -113,7 +127,9 @@
 .hero__title-line {
   display: block;
 
-  will-change: transform, opacity;
+  will-change:
+    transform,
+    opacity;
 }
 
 .hero__title-line--accent {
@@ -127,29 +143,34 @@
 
   font-family: var(--font-body);
   font-size: 15px;
+
   line-height: 1.75;
 
   color: var(--color-text-secondary);
 }
 
-/* =========================
+/* ==========================================
    BUTTON
-========================= */
+========================================== */
 
 .hero__button {
   display: inline-flex;
   align-items: center;
+
   gap: 18px;
 
   padding: 0;
 
   font-family: var(--font-mono);
+
   font-size: 10px;
   font-weight: 500;
 
   letter-spacing: 0.18em;
 
   color: var(--color-text);
+
+  will-change: transform;
 
   transition:
     color 300ms ease;
@@ -162,7 +183,9 @@
   display: grid;
   place-items: center;
 
-  border: 1px solid var(--color-accent);
+  border: 1px solid
+    var(--color-accent);
+
   border-radius: 50%;
 
   font-size: 16px;
@@ -170,12 +193,13 @@
   color: var(--color-accent);
 
   transition:
-    transform 350ms cubic-bezier(
-      0.16,
-      1,
-      0.3,
-      1
-    ),
+    transform 350ms
+      cubic-bezier(
+        0.16,
+        1,
+        0.3,
+        1
+      ),
     background 300ms ease,
     color 300ms ease,
     box-shadow 300ms ease;
@@ -188,26 +212,29 @@
 .hero__button:hover .hero__button-arrow {
   transform: translateX(6px);
 
-  background: var(--color-accent);
+  background:
+    var(--color-accent);
+
   color: var(--color-bg);
 
   box-shadow:
-    0 0 20px rgba(
-      0,
-      200,
-      255,
-      0.28
-    );
+    0 0 20px
+      rgba(
+        0,
+        200,
+        255,
+        0.28
+      );
 }
 
-/* =========================
+/* ==========================================
    META
-========================= */
+========================================== */
 
 .hero__meta {
   position: absolute;
 
-  z-index: 3;
+  z-index: 5;
 
   left: 4vw;
   right: 40px;
@@ -223,6 +250,7 @@
 .hero__counter {
   display: flex;
   align-items: center;
+
   gap: 18px;
 
   font-family: var(--font-mono);
@@ -230,7 +258,8 @@
 
   letter-spacing: 0.12em;
 
-  color: var(--color-text-secondary);
+  color:
+    var(--color-text-secondary);
 }
 
 .hero__progress {
@@ -239,7 +268,8 @@
 
   overflow: hidden;
 
-  background: var(--color-border);
+  background:
+    var(--color-border);
 }
 
 .hero__progress span {
@@ -248,15 +278,17 @@
   width: 28%;
   height: 100%;
 
-  background: var(--color-accent);
+  background:
+    var(--color-accent);
 
   box-shadow:
-    0 0 10px rgba(
-      0,
-      200,
-      255,
-      0.7
-    );
+    0 0 10px
+      rgba(
+        0,
+        200,
+        255,
+        0.7
+      );
 }
 
 .hero__scroll {
@@ -267,12 +299,13 @@
 
   letter-spacing: 0.18em;
 
-  color: var(--color-text-muted);
+  color:
+    var(--color-text-muted);
 }
 
-/* =========================
+/* ==========================================
    RESPONSIVE
-========================= */
+========================================== */
 
 @media (max-width: 900px) {
   .hero__content {
@@ -281,7 +314,10 @@
   }
 
   .hero__background {
-    background-position: 60% center;
+    inset: -1%;
+
+    background-position:
+      60% center;
   }
 
   .hero__overlay {
@@ -324,5 +360,22 @@
 
   .hero__counter {
     font-size: 8px;
+  }
+}
+
+/* ==========================================
+   REDUCED MOTION
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__background,
+  .hero__content,
+  .hero__button {
+    will-change: auto;
+  }
+
+  .hero__button,
+  .hero__button-arrow {
+    transition: none;
   }
 }
