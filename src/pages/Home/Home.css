@@ -1,0 +1,203 @@
+.hero {
+  position: relative;
+
+  min-height: 100svh;
+
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+
+  background: var(--color-bg);
+}
+
+.hero__background {
+  position: absolute;
+  inset: 0;
+
+  background-image: url('/images/nexus-hero.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(5, 7, 10, 0.9) 0%,
+      rgba(5, 7, 10, 0.55) 38%,
+      rgba(5, 7, 10, 0.12) 70%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5, 7, 10, 0.25),
+      rgba(5, 7, 10, 0.2)
+    );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+
+  width: min(700px, 90vw);
+
+  margin-left: clamp(40px, 8vw, 140px);
+}
+
+.hero__eyebrow {
+  margin: 0 0 28px;
+
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+
+  color: var(--color-accent);
+}
+
+.hero__title {
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  font-family: var(--font-display);
+  font-size: clamp(52px, 6vw, 104px);
+  font-weight: 400;
+
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.hero__title-line {
+  display: block;
+}
+
+.hero__title-line--accent {
+  color: var(--color-accent);
+}
+
+.hero__description {
+  width: min(420px, 100%);
+
+  margin: 38px 0 32px;
+
+  font-size: 15px;
+  line-height: 1.7;
+
+  color: var(--color-text-secondary);
+}
+
+.hero__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+
+  padding: 0;
+
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+
+  color: var(--color-text);
+}
+
+.hero__button-arrow {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+
+  color: var(--color-accent);
+
+  transition:
+    transform 300ms ease,
+    background 300ms ease,
+    color 300ms ease;
+}
+
+.hero__button:hover .hero__button-arrow {
+  transform: translateX(6px);
+
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.hero__counter {
+  position: absolute;
+  left: 4vw;
+  bottom: 48px;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+
+  color: var(--color-text-secondary);
+}
+
+.hero__progress {
+  width: 170px;
+  height: 1px;
+
+  background: var(--color-border);
+}
+
+.hero__progress span {
+  display: block;
+
+  width: 28%;
+  height: 100%;
+
+  background: var(--color-accent);
+
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.7);
+}
+
+.hero__scroll {
+  position: absolute;
+  right: 40px;
+  bottom: 48px;
+
+  writing-mode: vertical-rl;
+
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 900px) {
+  .navbar__nav {
+    display: none;
+  }
+
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .hero__content {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .hero__counter {
+    left: 20px;
+    bottom: 25px;
+  }
+
+  .hero__scroll {
+    right: 20px;
+    bottom: 25px;
+  }
+}

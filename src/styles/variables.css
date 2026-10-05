@@ -1,0 +1,29 @@
+:root {
+  /* Background */
+  --color-bg: #05070a;
+  --color-bg-secondary: #090d12;
+  --color-surface: #0d131a;
+
+  /* Accent */
+  --color-accent: #00c8ff;
+  --color-accent-bright: #4de8ff;
+  --color-accent-purple: #7c5cff;
+
+  /* Text */
+  --color-text: #f1f5f9;
+  --color-text-secondary: #8b96a5;
+  --color-text-muted: #586270;
+
+  /* Borders */
+  --color-border: #17232d;
+  --color-border-hover: #203544;
+
+  /* Layout */
+  --container-width: 1440px;
+  --page-padding: 40px;
+
+  /* Typography */
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
