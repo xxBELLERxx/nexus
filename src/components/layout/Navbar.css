@@ -25,10 +25,6 @@
   pointer-events: auto;
 }
 
-/* ==========================================
-   LOGO
-========================================== */
-
 .navbar__logo {
   display: inline-flex;
 
@@ -75,10 +71,6 @@
 
   letter-spacing: 0.2em;
 }
-
-/* ==========================================
-   DESKTOP LINKS
-========================================== */
 
 .navbar__links {
   display: flex;
@@ -147,10 +139,6 @@
       );
 }
 
-/*
- * Section buttons:
- * TECHNOLOGY / PRODUCTS
- */
 .navbar__section-link {
   appearance: none;
 
@@ -171,10 +159,6 @@
   transform-origin:
     left center;
 }
-
-/* ==========================================
-   MENU BUTTON
-========================================== */
 
 .navbar__menu {
   position: relative;
@@ -241,10 +225,6 @@
     rotate(-45deg);
 }
 
-/* ==========================================
-   MOBILE MENU
-========================================== */
-
 .navbar__mobile-menu {
   position: fixed;
 
@@ -269,10 +249,6 @@
   pointer-events: auto;
 }
 
-/* ==========================================
-   MOBILE HEADER
-========================================== */
-
 .navbar__mobile-header {
   display: flex;
 
@@ -292,10 +268,6 @@
   color:
     var(--color-accent);
 }
-
-/* ==========================================
-   MOBILE LINKS
-========================================== */
 
 .navbar__mobile-links {
   display: flex;
@@ -416,10 +388,6 @@ span:last-child {
     var(--color-accent);
 }
 
-/* ==========================================
-   MOBILE FOOTER
-========================================== */
-
 .navbar__mobile-footer {
   display: flex;
 
@@ -439,10 +407,6 @@ span:last-child {
   color:
     var(--color-accent);
 }
-
-/* ==========================================
-   TABLET / MOBILE
-========================================== */
 
 @media (max-width: 1000px) {
   .navbar__links {

@@ -93,10 +93,6 @@ function Company() {
         return
       }
 
-      /* ========================================
-         HERO INTRO
-      ======================================== */
-
       const intro = gsap.timeline({
         defaults: {
           ease: 'power3.out',
@@ -145,10 +141,6 @@ function Company() {
           '-=0.6',
         )
 
-      /* ========================================
-         PRINCIPLES
-      ======================================== */
-
       gsap.from('.company__principle', {
         autoAlpha: 0,
         y: 60,
@@ -162,10 +154,6 @@ function Company() {
           toggleActions: 'play none none reverse',
         },
       })
-
-      /* ========================================
-         VISUAL
-      ======================================== */
 
       if (visualRef.current) {
         gsap.to('.company__visual-ring--outer', {
@@ -190,10 +178,6 @@ function Company() {
           ease: 'sine.inOut',
         })
       }
-
-      /* ========================================
-         TIMELINE
-      ======================================== */
 
       if (
         timelineRef.current &&
@@ -248,10 +232,6 @@ function Company() {
     >
       <div className="company__background" />
 
-      {/* ========================================
-          HEADER
-      ======================================== */}
-
       <header className="company__header">
         <div>
           <span className="company__section-number">
@@ -267,10 +247,6 @@ function Company() {
           NEXUS // CORPORATE SYSTEM
         </span>
       </header>
-
-      {/* ========================================
-          HERO
-      ======================================== */}
 
       <div className="company__hero">
         <div className="company__hero-copy">
@@ -328,10 +304,6 @@ function Company() {
         </div>
       </div>
 
-      {/* ========================================
-          PRINCIPLES
-      ======================================== */}
-
       <section className="company__principles">
         <div className="company__subheading">
           <span>
@@ -370,10 +342,6 @@ function Company() {
           ))}
         </div>
       </section>
-
-      {/* ========================================
-          TIMELINE
-      ======================================== */}
 
       <section
         ref={timelineRef}

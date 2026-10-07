@@ -24,12 +24,6 @@ function Hero() {
         '(hover: hover)',
       ).matches
 
-      /*
-       * ==========================================
-       * INTRO ANIMATION
-       * ==========================================
-       */
-
       if (!prefersReducedMotion) {
         const timeline = gsap.timeline({
           defaults: {
@@ -94,12 +88,6 @@ function Hero() {
             '-=0.2',
           )
 
-        /*
-         * ==========================================
-         * HERO SCROLL PARALLAX
-         * ==========================================
-         */
-
         gsap.to('.hero__background', {
           yPercent: 10,
           ease: 'none',
@@ -112,12 +100,6 @@ function Hero() {
           },
         })
       }
-
-      /*
-       * ==========================================
-       * MOUSE PARALLAX
-       * ==========================================
-       */
 
       if (!prefersReducedMotion && supportsHover) {
         const background = section.querySelector<HTMLElement>(
@@ -135,12 +117,6 @@ function Hero() {
         if (!background || !content || !button) {
           return
         }
-
-        /*
-         * quickTo() идеально подходит для mousemove,
-         * когда одно и то же свойство обновляется
-         * очень часто.
-         */
         const backgroundX = gsap.quickTo(
           background,
           'x',
@@ -177,12 +153,6 @@ function Hero() {
           },
         )
 
-        /*
-         * ==========================================
-         * HERO POINTER
-         * ==========================================
-         */
-
         const handlePointerMove = (
           event: PointerEvent,
         ) => {
@@ -191,16 +161,9 @@ function Hero() {
 
           const y =
             event.clientY / window.innerHeight - 0.5
-
-          /*
-           * Фон двигается сильнее.
-           */
           backgroundX(x * -22)
           backgroundY(y * -14)
 
-          /*
-           * Контент двигается значительно слабее.
-           */
           contentX(x * 7)
           contentY(y * 5)
         }
@@ -222,12 +185,6 @@ function Hero() {
           'pointerleave',
           resetHero,
         )
-
-        /*
-         * ==========================================
-         * MAGNETIC BUTTON
-         * ==========================================
-         */
 
         const buttonX = gsap.quickTo(
           button,
@@ -263,11 +220,6 @@ function Hero() {
             rect.top -
             rect.height / 2
 
-          /*
-           * Коэффициент 0.18 означает,
-           * что кнопка двигается только на 18%
-           * от положения курсора внутри неё.
-           */
           buttonX(x * 0.18)
           buttonY(y * 0.18)
         }
@@ -286,12 +238,6 @@ function Hero() {
           'pointerleave',
           resetButton,
         )
-
-        /*
-         * ==========================================
-         * CLEANUP
-         * ==========================================
-         */
 
         return () => {
           section.removeEventListener(

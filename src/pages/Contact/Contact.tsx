@@ -60,10 +60,6 @@ function Contact() {
         return
       }
 
-      /* ========================================
-         INTRO
-      ======================================== */
-
       const intro = gsap.timeline({
         defaults: {
           ease: 'power3.out',
@@ -112,10 +108,6 @@ function Contact() {
           '-=0.35',
         )
 
-      /* ========================================
-         CONTACT ROWS
-      ======================================== */
-
       gsap.from('.contact__contact', {
         autoAlpha: 0,
         x: 50,
@@ -130,10 +122,6 @@ function Contact() {
             'play none none reverse',
         },
       })
-
-      /* ========================================
-         CORE
-      ======================================== */
 
       if (coreRef.current) {
         gsap.to(coreRef.current, {
@@ -152,10 +140,6 @@ function Contact() {
           ease: 'sine.inOut',
         })
       }
-
-      /* ========================================
-         SIGNAL
-      ======================================== */
 
       gsap.to('.contact__signal', {
         x: 20,
@@ -179,10 +163,6 @@ function Contact() {
     >
       <div className="contact__background" />
 
-      {/* ========================================
-          HEADER
-      ======================================== */}
-
       <header className="contact__header">
         <div>
           <span className="contact__section-number">
@@ -198,10 +178,6 @@ function Contact() {
           NEXUS // COMMUNICATION SYSTEM
         </span>
       </header>
-
-      {/* ========================================
-          HERO
-      ======================================== */}
 
       <div className="contact__hero">
         <div className="contact__hero-copy">
@@ -243,10 +219,6 @@ function Contact() {
           </a>
         </div>
 
-        {/* ======================================
-            CORE
-        ====================================== */}
-
         <div className="contact__visual">
           <div
             ref={coreRef}
@@ -275,10 +247,6 @@ function Contact() {
           </div>
         </div>
       </div>
-
-      {/* ========================================
-          CONTACTS
-      ======================================== */}
 
       <section className="contact__contacts">
         <div className="contact__contacts-header">
@@ -318,19 +286,11 @@ function Contact() {
         </div>
       </section>
 
-      {/* ========================================
-          SIGNALS
-      ======================================== */}
-
       <div className="contact__signals">
         <span className="contact__signal contact__signal--1" />
         <span className="contact__signal contact__signal--2" />
         <span className="contact__signal contact__signal--3" />
       </div>
-
-      {/* ========================================
-          FOOTER
-      ======================================== */}
 
       <footer className="contact__footer">
         <span>

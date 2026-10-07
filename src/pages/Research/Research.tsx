@@ -180,10 +180,6 @@ function Research() {
     >
       <div className="research__grid" />
 
-      {/* ========================================
-          HEADER
-      ======================================== */}
-
       <header className="research__header">
         <div>
           <span className="research__section-number">
@@ -199,10 +195,6 @@ function Research() {
           NEXUS // R&amp;D DIVISION
         </span>
       </header>
-
-      {/* ========================================
-          INTRO
-      ======================================== */}
 
       <div className="research__intro">
         <span className="research__eyebrow">
@@ -224,10 +216,6 @@ function Research() {
           intelligence, computation and human capability.
         </p>
       </div>
-
-      {/* ========================================
-          VISUAL
-      ======================================== */}
 
       <div className="research__visual-wrapper">
         <div
@@ -262,10 +250,6 @@ function Research() {
           </span>
         </div>
       </div>
-
-      {/* ========================================
-          RESEARCH AREAS
-      ======================================== */}
 
       <div className="research__areas">
         {researchAreas.map((area) => (
@@ -315,10 +299,6 @@ function Research() {
           </article>
         ))}
       </div>
-
-      {/* ========================================
-          FOOTER
-      ======================================== */}
 
       <footer className="research__footer">
         <span>

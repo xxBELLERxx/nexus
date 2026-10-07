@@ -62,10 +62,6 @@ function Manifesto() {
       ) {
         return
       }
-
-      /*
-       * Initial state.
-       */
       gsap.set(words, {
         autoAlpha: 0,
         y: 50,
@@ -100,10 +96,6 @@ function Manifesto() {
           anticipatePin: 1,
         },
       })
-
-      /*
-       * Each concept becomes a complete visual state.
-       */
       concepts.slice(1).forEach((_, index) => {
         const previousWord = words[index]
         const currentWord = words[index + 1]
@@ -174,10 +166,6 @@ function Manifesto() {
             '<0.15',
           )
       })
-
-      /*
-       * Slow movement of the visual image area.
-       */
       timeline.to(
         '.manifesto__visual-inner',
         {

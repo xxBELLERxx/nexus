@@ -19,10 +19,6 @@
     var(--color-bg);
 }
 
-/* ==========================================
-   STAGE
-========================================== */
-
 .products__stage {
   position: relative;
 
@@ -36,10 +32,6 @@
     var(--page-padding)
     40px;
 }
-
-/* ==========================================
-   HEADER
-========================================== */
 
 .products__header {
   position: relative;
@@ -77,10 +69,6 @@
   color:
     var(--color-text-secondary);
 }
-
-/* ==========================================
-   INTRO
-========================================== */
 
 .products__intro {
   position: absolute;
@@ -151,10 +139,6 @@
     var(--color-text-secondary);
 }
 
-/* ==========================================
-   VIEWPORT
-========================================== */
-
 .products__viewport {
   position: absolute;
 
@@ -165,10 +149,6 @@
 
   overflow: hidden;
 }
-
-/* ==========================================
-   TRACK
-========================================== */
 
 .products__track {
   position: absolute;
@@ -194,10 +174,6 @@
   will-change:
     transform;
 }
-
-/* ==========================================
-   PRODUCT CARD
-========================================== */
 
 .product-card {
   position: relative;
@@ -227,13 +203,6 @@
 
   isolation: isolate;
 }
-
-/*
- * Равномерное затемнение всей карточки.
- *
- * Никаких градиентов здесь нет.
- * Поэтому этот слой не создаёт полос.
- */
 .product-card::before {
   content: '';
 
@@ -253,10 +222,6 @@
       0.12
     );
 }
-
-/*
- * Внутренняя рамка.
- */
 .product-card::after {
   content: '';
 
@@ -288,10 +253,6 @@
       255
     );
 }
-
-/* ==========================================
-   CARD TOP
-========================================== */
 
 .product-card__top {
   position: absolute;
@@ -332,10 +293,6 @@
     );
 }
 
-/* ==========================================
-   CARD VISUAL
-========================================== */
-
 .product-card__visual {
   position: absolute;
 
@@ -347,10 +304,6 @@
 
   pointer-events: none;
 }
-
-/* ==========================================
-   PRODUCT IMAGE
-========================================== */
 
 .product-card__visual img {
   position: absolute;
@@ -383,10 +336,6 @@
   -webkit-backface-visibility: hidden;
 }
 
-/* ==========================================
-   FULL IMAGE OVERLAY
-========================================== */
-
 .product-card__visual-overlay {
   position: absolute;
 
@@ -407,11 +356,6 @@
       0
     );
 }
-
-/* ==========================================
-   BOTTOM FADE
-========================================== */
-
 .product-card__visual-overlay::after {
   content: '';
 
@@ -425,25 +369,17 @@
 
       rgba(5, 7, 10, 0) 0%,
 
-      /* Начинаем затемнение раньше, чтобы перекрыть фон за заголовками */
       rgba(5, 7, 10, 0.08) 20%,
 
-      /* Усиливаем плотность в середине (где начинается текст) */
       rgba(5, 7, 10, 0.55) 45%,
 
-      /* Плотный слой перед блоком с метриками */
       rgba(5, 7, 10, 0.88) 70%,
 
-      /* Полностью глухой цвет в нижней части карточки */
       rgba(5, 7, 10, 1) 90%,
 
       rgba(5, 7, 10, 1) 100%
     );
 }
-
-/* ==========================================
-   SIDE VIGNETTE
-========================================== */
 
 .product-card__visual-overlay::before {
   content: '';
@@ -454,26 +390,18 @@
       90deg,
       rgba(5, 7, 10, 0.2) 0%,
       rgba(5, 7, 10, 0.04) 18%,
-      rgba(5, 7, 10, 0) 35%, /* Заменено с transparent */
-      rgba(5, 7, 10, 0) 68%, /* Заменено с transparent */
+      rgba(5, 7, 10, 0) 35%, 
+      rgba(5, 7, 10, 0) 68%, 
       rgba(5, 7, 10, 0.04) 82%,
       rgba(5, 7, 10, 0.2) 100%
     );
 }
-
-/* ==========================================
-   IMAGE HOVER
-========================================== */
 
 .product-card:hover
 .product-card__visual img {
   transform:
     scale(1.045);
 }
-
-/* ==========================================
-   CARD CONTENT
-========================================== */
 
 .product-card__content {
   position: absolute;
@@ -489,10 +417,6 @@
   margin: 0;
   padding: 0;
 }
-
-/* ==========================================
-   CATEGORY
-========================================== */
 
 .product-card__category {
   display: inline-flex;
@@ -523,10 +447,6 @@
     var(--color-accent);
 }
 
-/* ==========================================
-   TITLE
-========================================== */
-
 .product-card__content h3 {
   margin: 0;
 
@@ -552,10 +472,6 @@
   color:
     var(--color-text);
 }
-
-/* ==========================================
-   DESCRIPTION
-========================================== */
 
 .product-card__content p {
   width:
@@ -583,10 +499,6 @@
     );
 }
 
-/* ==========================================
-   CARD BOTTOM
-========================================== */
-
 .product-card__bottom {
   display: flex;
 
@@ -606,10 +518,6 @@
       0.16
     );
 }
-
-/* ==========================================
-   METRIC
-========================================== */
 
 .product-card__metric {
   display: block;
@@ -640,10 +548,6 @@
   color:
     var(--color-text-muted);
 }
-
-/* ==========================================
-   BUTTON
-========================================== */
 
 .product-card__button {
   display: inline-flex;
@@ -722,14 +626,6 @@ span:last-child {
     var(--color-bg);
 }
 
-/* ==========================================
-   CARD VARIATIONS
-========================================== */
-
-/*
- * NEXUS LINK
- */
-
 .product-card--2 {
   background:
     linear-gradient(
@@ -738,10 +634,6 @@ span:last-child {
       #07090d
     );
 }
-
-/*
- * NEXUS R
- */
 
 .product-card--3 {
   background:
@@ -752,16 +644,12 @@ span:last-child {
     );
 }
 
-/*
- * NEXUS CORE
- */
-
 .product-card--4 {
   background:
     radial-gradient(
       circle at 70% 30%,
       rgba(124, 92, 255, 0.06),
-      rgba(124, 92, 255, 0) 42% /* Заменено с transparent */
+      rgba(124, 92, 255, 0) 42% 
     ),
     #080b12;
 }
@@ -777,10 +665,6 @@ span:last-child {
   background:
     #9c91ff;
 }
-
-/* ==========================================
-   FOOTER
-========================================== */
 
 .products__footer {
   position: absolute;
@@ -833,10 +717,6 @@ span:last-child {
     left center;
 }
 
-/* ==========================================
-   LARGE TABLET
-========================================== */
-
 @media (max-width: 1200px) {
   .products__viewport {
     left: 27%;
@@ -862,10 +742,6 @@ span:last-child {
       );
   }
 }
-
-/* ==========================================
-   TABLET
-========================================== */
 
 @media (max-width: 1000px) {
   .products__intro {
@@ -899,10 +775,6 @@ span:last-child {
   }
 }
 
-/* ==========================================
-   MOBILE
-========================================== */
-
 @media (max-width: 700px) {
   .products {
     height: auto;
@@ -926,10 +798,6 @@ span:last-child {
   .products__header > span:last-child {
     display: none;
   }
-
-  /* ========================================
-     INTRO
-  ======================================== */
 
   .products__intro {
     position: relative;
@@ -961,10 +829,6 @@ span:last-child {
       );
   }
 
-  /* ========================================
-     VIEWPORT
-  ======================================== */
-
   .products__viewport {
     position: relative;
 
@@ -977,10 +841,6 @@ span:last-child {
 
     overflow: visible;
   }
-
-  /* ========================================
-     TRACK
-  ======================================== */
 
   .products__track {
     position: relative;
@@ -1004,10 +864,6 @@ span:last-child {
 
     will-change: auto;
   }
-
-  /* ========================================
-     CARD
-  ======================================== */
 
   .product-card {
     width: 100%;
@@ -1058,10 +914,6 @@ span:last-child {
   .product-card__metric {
     font-size: 38px;
   }
-
-  /* ========================================
-     FOOTER
-  ======================================== */
 
   .products__footer {
     position: relative;

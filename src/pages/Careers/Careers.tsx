@@ -95,10 +95,6 @@ function Careers() {
         return
       }
 
-      /* ========================================
-         HERO INTRO
-      ======================================== */
-
       const intro = gsap.timeline({
         defaults: {
           ease: 'power3.out',
@@ -137,10 +133,6 @@ function Careers() {
           '-=0.4',
         )
 
-      /* ========================================
-         STATEMENT
-      ======================================== */
-
       gsap.from('.careers__statement', {
         autoAlpha: 0,
         x: -50,
@@ -153,10 +145,6 @@ function Careers() {
           toggleActions: 'play none none reverse',
         },
       })
-
-      /* ========================================
-         POSITIONS
-      ======================================== */
 
       gsap.from('.careers__position', {
         autoAlpha: 0,
@@ -184,10 +172,6 @@ function Careers() {
     >
       <div className="careers__background" />
 
-      {/* ========================================
-          HEADER
-      ======================================== */}
-
       <header className="careers__header">
         <div>
           <span className="careers__section-number">
@@ -203,10 +187,6 @@ function Careers() {
           NEXUS // HUMAN SYSTEMS
         </span>
       </header>
-
-      {/* ========================================
-          HERO
-      ======================================== */}
 
       <div className="careers__hero">
         <div className="careers__hero-copy">
@@ -250,10 +230,6 @@ function Careers() {
         </div>
       </div>
 
-      {/* ========================================
-          STATEMENT
-      ======================================== */}
-
       <div className="careers__statement">
         <span className="careers__statement-label">
           WHO WE ARE LOOKING FOR
@@ -269,10 +245,6 @@ function Careers() {
           +
         </span>
       </div>
-
-      {/* ========================================
-          POSITIONS
-      ======================================== */}
 
       <section className="careers__positions">
         <div className="careers__positions-header">
@@ -360,10 +332,6 @@ function Careers() {
           ))}
         </div>
       </section>
-
-      {/* ========================================
-          FOOTER
-      ======================================== */}
 
       <footer className="careers__footer">
         <span>

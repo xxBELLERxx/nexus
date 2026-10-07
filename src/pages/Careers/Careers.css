@@ -21,10 +21,6 @@
   isolation: isolate;
 }
 
-/* ==========================================
-   BACKGROUND
-========================================== */
-
 .careers__background {
   position: absolute;
 
@@ -60,10 +56,6 @@
     );
 }
 
-/* ==========================================
-   HEADER
-========================================== */
-
 .careers__header {
   position: relative;
 
@@ -96,10 +88,6 @@
   color:
     var(--color-accent);
 }
-
-/* ==========================================
-   HERO
-========================================== */
 
 .careers__hero {
   position: relative;
@@ -188,10 +176,6 @@
     var(--color-text-secondary);
 }
 
-/* ==========================================
-   HERO META
-========================================== */
-
 .careers__hero-meta {
   position: absolute;
 
@@ -221,10 +205,6 @@
   color:
     var(--color-accent);
 }
-
-/* ==========================================
-   STATEMENT
-========================================== */
 
 .careers__statement {
   position: relative;
@@ -306,10 +286,6 @@
     var(--color-accent);
 }
 
-/* ==========================================
-   POSITIONS
-========================================== */
-
 .careers__positions {
   position: relative;
 
@@ -347,10 +323,6 @@
     var(--color-accent);
 }
 
-/* ==========================================
-   LIST
-========================================== */
-
 .careers__list {
   border-bottom:
     1px solid
@@ -361,10 +333,6 @@
       0.2
     );
 }
-
-/* ==========================================
-   POSITION
-========================================== */
 
 .careers__position {
   position: relative;
@@ -488,10 +456,6 @@
     color 250ms ease;
 }
 
-/* ==========================================
-   POSITION DETAILS
-========================================== */
-
 .careers__position-details {
   display: grid;
 
@@ -530,10 +494,6 @@
         1
       );
 }
-
-/* ==========================================
-   HOVER / FOCUS
-========================================== */
 
 .careers__position:hover,
 .careers__position:focus-visible {
@@ -575,10 +535,6 @@
     var(--color-bg);
 }
 
-/* ==========================================
-   POSITION INFO
-========================================== */
-
 .careers__position-info {
   display: flex;
 
@@ -611,10 +567,6 @@
     var(--color-text-secondary);
 }
 
-/* ==========================================
-   DESCRIPTION
-========================================== */
-
 .careers__position-description {
   max-width: 430px;
 }
@@ -646,10 +598,6 @@
   color:
     var(--color-accent);
 }
-
-/* ==========================================
-   APPLY BUTTON
-========================================== */
 
 .careers__position-apply {
   align-self: flex-end;
@@ -732,10 +680,6 @@ span:last-child {
     var(--color-bg);
 }
 
-/* ==========================================
-   FOOTER
-========================================== */
-
 .careers__footer {
   display: grid;
 
@@ -774,10 +718,6 @@ span:last-child {
     var(--color-border);
 }
 
-/* ==========================================
-   TABLET
-========================================== */
-
 @media (max-width: 1000px) {
   .careers__title {
     font-size:
@@ -813,10 +753,6 @@ span:last-child {
     padding-left: 110px;
   }
 }
-
-/* ==========================================
-   MOBILE
-========================================== */
 
 @media (max-width: 700px) {
   .careers {

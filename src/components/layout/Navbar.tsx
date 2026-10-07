@@ -62,12 +62,6 @@ function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  /*
-   * ==========================================
-   * NAVBAR INTRO
-   * ==========================================
-   */
-
   useGSAP(
     () => {
       if (!navRef.current) return
@@ -128,12 +122,6 @@ function Navbar() {
       scope: navRef,
     },
   )
-
-  /*
-   * ==========================================
-   * MOBILE MENU ANIMATION
-   * ==========================================
-   */
 
   useGSAP(
     () => {
@@ -197,19 +185,10 @@ function Navbar() {
     },
   )
 
-  /*
-   * ==========================================
-   * HELPERS
-   * ==========================================
-   */
-
   const closeMenu = () => {
     setIsOpen(false)
   }
 
-  /*
-   * Scroll to top of Home.
-   */
   const handleLogoClick = (
     event: React.MouseEvent<HTMLAnchorElement>,
   ) => {
@@ -228,17 +207,6 @@ function Navbar() {
 
     navigate('/')
   }
-
-  /*
-   * Scroll to a section on Home.
-   *
-   * If we are already on Home,
-   * scroll immediately.
-   *
-   * If we are on another page,
-   * navigate to Home first and then
-   * scroll to the requested section.
-   */
   const scrollToSection = (
     sectionId: string,
   ) => {
@@ -266,10 +234,6 @@ function Navbar() {
         })
     }, 100)
   }
-
-  /*
-   * Normal route navigation.
-   */
   const navigateToPage = (
     path: string,
   ) => {
@@ -287,12 +251,6 @@ function Navbar() {
     navigate(path)
   }
 
-  /*
-   * ==========================================
-   * RENDER
-   * ==========================================
-   */
-
   return (
     <nav
       ref={navRef}
@@ -303,9 +261,6 @@ function Navbar() {
       }`}
     >
       <div className="navbar__inner">
-        {/* ======================================
-            LOGO
-        ====================================== */}
 
         <a
           href="/"
@@ -321,10 +276,6 @@ function Navbar() {
             NEXUS
           </span>
         </a>
-
-        {/* ======================================
-            DESKTOP NAVIGATION
-        ====================================== */}
 
         <div className="navbar__links">
           {navItems.map((item) => {
@@ -367,10 +318,6 @@ function Navbar() {
           })}
         </div>
 
-        {/* ======================================
-            MENU BUTTON
-        ====================================== */}
-
         <button
           type="button"
           className="navbar__menu"
@@ -391,10 +338,6 @@ function Navbar() {
         </button>
       </div>
 
-      {/* ========================================
-          MOBILE MENU
-      ======================================== */}
-
       <div className="navbar__mobile-menu">
         <div className="navbar__mobile-header">
           <span>
@@ -407,7 +350,6 @@ function Navbar() {
         </div>
 
         <div className="navbar__mobile-links">
-          {/* HOME */}
 
           <button
             type="button"
@@ -431,8 +373,6 @@ function Navbar() {
             <span>HOME</span>
             <span>↗</span>
           </button>
-
-          {/* NAVIGATION ITEMS */}
 
           {navItems.map(
             (item, index) => {

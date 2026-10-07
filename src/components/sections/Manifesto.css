@@ -26,10 +26,6 @@
   overflow: hidden;
 }
 
-/* ==========================================
-   HEADER
-========================================== */
-
 .manifesto__header {
   position: relative;
   z-index: 10;
@@ -49,10 +45,6 @@
   color: var(--color-accent);
 }
 
-/* ==========================================
-   LAYOUT
-========================================== */
-
 .manifesto__layout {
   position: relative;
 
@@ -66,10 +58,6 @@
 
   align-items: center;
 }
-
-/* ==========================================
-   CONTENT
-========================================== */
 
 .manifesto__content {
   position: relative;
@@ -139,10 +127,6 @@
   color: var(--color-accent);
 }
 
-/* ==========================================
-   DESCRIPTION
-========================================== */
-
 .manifesto__description-container {
   position: relative;
 
@@ -183,10 +167,6 @@
 
   color: var(--color-text-secondary);
 }
-
-/* ==========================================
-   VISUAL
-========================================== */
 
 .manifesto__visual {
   position: relative;
@@ -292,10 +272,6 @@
   color: var(--color-text-muted);
 }
 
-/* ==========================================
-   FOOTER
-========================================== */
-
 .manifesto__footer {
   position: absolute;
 
@@ -331,10 +307,6 @@
 
   background: var(--color-border);
 }
-
-/* ==========================================
-   MOBILE
-========================================== */
 
 @media (max-width: 900px) {
   .manifesto__layout {

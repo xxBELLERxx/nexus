@@ -13,10 +13,6 @@
   isolation: isolate;
 }
 
-/* ==========================================
-   BACKGROUND
-========================================== */
-
 .hero__background {
   position: absolute;
   inset: -3%;
@@ -67,10 +63,6 @@
   background-image:
     url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
 }
-
-/* ==========================================
-   CONTENT
-========================================== */
 
 .hero__content {
   position: relative;
@@ -149,10 +141,6 @@
   color: var(--color-text-secondary);
 }
 
-/* ==========================================
-   BUTTON
-========================================== */
-
 .hero__button {
   display: inline-flex;
   align-items: center;
@@ -227,10 +215,6 @@
       );
 }
 
-/* ==========================================
-   META
-========================================== */
-
 .hero__meta {
   position: absolute;
 
@@ -303,10 +287,6 @@
     var(--color-text-muted);
 }
 
-/* ==========================================
-   RESPONSIVE
-========================================== */
-
 @media (max-width: 900px) {
   .hero__content {
     margin-left: 20px;
@@ -362,10 +342,6 @@
     font-size: 8px;
   }
 }
-
-/* ==========================================
-   REDUCED MOTION
-========================================== */
 
 @media (prefers-reduced-motion: reduce) {
   .hero__background,

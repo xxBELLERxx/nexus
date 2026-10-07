@@ -56,10 +56,6 @@ function getStageBlend(
     number,
     number,
   ] = [0, 0, 0, 0]
-
-  /*
-   * Самое начало.
-   */
   if (position <= 0) {
     weights[0] = 1
 
@@ -71,16 +67,6 @@ function getStageBlend(
     }
   }
 
-  /*
-   * Каждый следующий stage
-   * начинает появляться ПЕРЕД
-   * границей следующего этапа.
-   *
-   * 0.88 → 1.00 = AI → ROBOTICS
-   * 1.88 → 2.00 = ROBOTICS → NEURAL
-   * 2.88 → 3.00 = NEURAL → QUANTUM
-   */
-
   for (
     let boundary = 1;
     boundary <= 3;
@@ -88,10 +74,6 @@ function getStageBlend(
   ) {
     const transitionStart =
       boundary - transitionSize
-
-    /*
-     * Переход.
-     */
     if (
       position >= transitionStart &&
       position < boundary
@@ -128,11 +110,6 @@ function getStageBlend(
         weights,
       }
     }
-
-    /*
-     * После границы состояние уже
-     * полностью переключено.
-     */
     if (position < boundary) {
       const currentStage =
         boundary - 1
@@ -147,10 +124,6 @@ function getStageBlend(
       }
     }
   }
-
-  /*
-   * Финальный Quantum.
-   */
   weights[3] = 1
 
   return {
@@ -160,10 +133,6 @@ function getStageBlend(
     weights,
   }
 }
-
-/* =========================================================
-   AI — INTELLIGENCE FIELD
-========================================================= */
 
 function IntelligenceField({
   progressRef,
@@ -348,10 +317,6 @@ function IntelligenceField({
   )
 }
 
-/* =========================================================
-   ROBOTICS — MECHANICAL CORE
-========================================================= */
-
 function RoboticsStructure({
   progressRef,
 }: NexusCoreProps) {
@@ -393,7 +358,6 @@ function RoboticsStructure({
 
   return (
     <group ref={groupRef}>
-      {/* Central mechanical rings */}
 
       <mesh rotation={[0.8, 0.2, 0.1]}>
         <torusGeometry
@@ -467,8 +431,6 @@ function RoboticsStructure({
         />
       </mesh>
 
-      {/* Mechanical modules */}
-
       {Array.from({
         length: 6,
       }).map((_, index) => {
@@ -526,10 +488,6 @@ function RoboticsStructure({
     </group>
   )
 }
-
-/* =========================================================
-   NEURAL — NETWORK
-========================================================= */
 
 function NeuralNetwork({
   progressRef,
@@ -720,10 +678,6 @@ function NeuralNetwork({
   )
 }
 
-/* =========================================================
-   QUANTUM — UNSTABLE FIELD
-========================================================= */
-
 function QuantumField({
   progressRef,
 }: NexusCoreProps) {
@@ -844,10 +798,6 @@ function QuantumField({
     </points>
   )
 }
-
-/* =========================================================
-   CENTRAL CORE
-========================================================= */
 
 function CoreSphere({
   progressRef,
@@ -972,16 +922,8 @@ function CoreSphere({
           1,
         ),
       )
-
-      /*
-       * General rotation.
-       */
       groupRef.current.rotation.y +=
         delta * 0.12
-
-      /*
-       * Mouse interaction.
-       */
       const targetRotationX =
         -state.pointer.y * 0.16
 
@@ -1001,11 +943,6 @@ function CoreSphere({
           groupRef.current.rotation.z
         ) *
         0.025
-
-      /*
-       * Different technologies
-       * have different energy levels.
-       */
       const glow =
         0.1 +
         (
@@ -1076,10 +1013,6 @@ function CoreSphere({
   )
 }
 
-/* =========================================================
-   COMPLETE CORE SCENE
-========================================================= */
-
 function CoreScene({
   progressRef,
 }: NexusCoreProps) {
@@ -1141,10 +1074,6 @@ function CoreScene({
     </group>
   )
 }
-
-/* =========================================================
-   NEXUS CORE
-========================================================= */
 
 function NexusCore({
   progressRef,

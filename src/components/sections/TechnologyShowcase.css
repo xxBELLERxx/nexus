@@ -26,10 +26,6 @@
   overflow: hidden;
 }
 
-/* ==========================================
-   HEADER
-========================================== */
-
 .technology__header {
   position: relative;
   z-index: 20;
@@ -48,10 +44,6 @@
 .technology__header span:first-child {
   color: var(--color-accent);
 }
-
-/* ==========================================
-   INTRO
-========================================== */
 
 .technology__intro {
   position: absolute;
@@ -113,10 +105,6 @@
   color: var(--color-text-secondary);
 }
 
-/* ==========================================
-   TECHNOLOGY INDEX
-========================================== */
-
 .technology-index {
   position: absolute;
 
@@ -159,10 +147,6 @@
 .technology-index__item:hover {
   transform: translateX(-3px);
 }
-
-/* ==========================================
-   ACTIVE SYSTEM HUD
-========================================== */
 
 .technology-hud {
   position: absolute;
@@ -245,19 +229,11 @@
   color: var(--color-accent) !important;
 }
 
-/* ==========================================
-   SHOWCASE
-========================================== */
-
 .technology__showcase {
   position: absolute;
 
   inset: 0;
 }
-
-/* ==========================================
-   VISUAL / CORE
-========================================== */
 
 .technology__visual {
   position: absolute;
@@ -352,10 +328,6 @@
   color: var(--color-accent);
 }
 
-/* ==========================================
-   PANELS
-========================================== */
-
 .technology__panels {
   position: absolute;
 
@@ -370,11 +342,6 @@
   position: absolute;
 
   left: var(--page-padding);
-
-  /*
-   * Карточка теперь чуть выше и ближе
-   * к центральной части композиции.
-   */
   bottom: 13%;
 
   width: min(
@@ -406,10 +373,6 @@
     transform,
     opacity;
 }
-
-/* ==========================================
-   PANEL CONTENT
-========================================== */
 
 .technology-panel__top {
   display: flex;
@@ -474,10 +437,6 @@
   color: var(--color-text-secondary);
 }
 
-/* ==========================================
-   METRIC
-========================================== */
-
 .technology-panel__metric {
   display: flex;
 
@@ -523,10 +482,6 @@
 
   text-align: right;
 }
-
-/* ==========================================
-   FOOTER
-========================================== */
 
 .technology__footer {
   position: absolute;
@@ -593,10 +548,6 @@
       );
 }
 
-/* ==========================================
-   TABLET
-========================================== */
-
 @media (max-width: 1200px) {
   .technology__visual {
     right: 2%;
@@ -624,10 +575,6 @@
     );
   }
 }
-
-/* ==========================================
-   MOBILE / TABLET
-========================================== */
 
 @media (max-width: 900px) {
   .technology__intro {
@@ -669,10 +616,6 @@
     right: 20px;
   }
 }
-
-/* ==========================================
-   MOBILE
-========================================== */
 
 @media (max-width: 600px) {
   .technology {

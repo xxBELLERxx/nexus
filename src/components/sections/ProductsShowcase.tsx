@@ -42,28 +42,12 @@ function ProductsShowcase() {
         return
       }
 
-      /*
-       * ==========================================
-       * RESPONSIVE GSAP
-       * ==========================================
-       */
-
       const media =
         gsap.matchMedia()
 
       media.add(
         '(min-width: 701px)',
         () => {
-          /*
-           * ======================================
-           * HORIZONTAL DISTANCE
-           * ======================================
-           *
-           * Здесь считаем именно расстояние,
-           * на которое track должен уйти влево.
-           *
-           * Значение всегда положительное.
-           */
           const getHorizontalDistance =
             () => {
               return Math.max(
@@ -72,23 +56,9 @@ function ProductsShowcase() {
                 0,
               )
             }
-
-          /*
-           * ======================================
-           * INITIAL POSITION
-           * ======================================
-           *
-           * Всегда начинаем слева.
-           */
           gsap.set(track, {
             x: 0,
           })
-
-          /*
-           * ======================================
-           * MAIN TIMELINE
-           * ======================================
-           */
 
           const timeline =
             gsap.timeline({
@@ -96,11 +66,6 @@ function ProductsShowcase() {
                 trigger: section,
 
                 start: 'top top',
-
-                /*
-                 * Вертикальная длина scroll
-                 * равна длине horizontal movement.
-                 */
                 end: () =>
                   `+=${getHorizontalDistance()}`,
 
@@ -114,12 +79,6 @@ function ProductsShowcase() {
               },
             })
 
-          /*
-           * ======================================
-           * HORIZONTAL MOVEMENT
-           * ======================================
-           */
-
           timeline.to(
             track,
             {
@@ -132,15 +91,6 @@ function ProductsShowcase() {
             },
             0,
           )
-
-          /*
-           * ======================================
-           * IMAGE PARALLAX
-           * ======================================
-           *
-           * Картинки внутри карточек слегка
-           * двигаются относительно самого track.
-           */
           timeline.to(
             '.product-card__visual img',
             {
@@ -153,12 +103,6 @@ function ProductsShowcase() {
             0,
           )
 
-          /*
-           * ======================================
-           * HEADER LINE
-           * ======================================
-           */
-
           timeline.to(
             '.products__header-line',
             {
@@ -170,12 +114,6 @@ function ProductsShowcase() {
             },
             0,
           )
-
-          /*
-           * ======================================
-           * CLEANUP
-           * ======================================
-           */
 
           return () => {
             timeline.kill()
@@ -202,9 +140,6 @@ function ProductsShowcase() {
         ref={stageRef}
         className="products__stage"
       >
-        {/* ======================================
-            HEADER
-        ====================================== */}
 
         <header className="products__header">
           <div>
@@ -221,10 +156,6 @@ function ProductsShowcase() {
             DESIGNED FOR WHAT COMES NEXT
           </span>
         </header>
-
-        {/* ======================================
-            INTRO
-        ====================================== */}
 
         <div className="products__intro">
           <span className="products__eyebrow">
@@ -246,10 +177,6 @@ function ProductsShowcase() {
           </p>
         </div>
 
-        {/* ======================================
-            HORIZONTAL PRODUCTS
-        ====================================== */}
-
         <div
           ref={viewportRef}
           className="products__viewport"
@@ -266,9 +193,6 @@ function ProductsShowcase() {
                     index + 1
                   }`}
                 >
-                  {/* ==========================
-                      TOP
-                  ========================== */}
 
                   <div className="product-card__top">
                     <span>
@@ -279,10 +203,6 @@ function ProductsShowcase() {
                       {product.code}
                     </span>
                   </div>
-
-                  {/* ==========================
-                      VISUAL
-                  ========================== */}
 
                   <div className="product-card__visual">
                     <img
@@ -297,10 +217,6 @@ function ProductsShowcase() {
 
                     <div className="product-card__visual-overlay" />
                   </div>
-
-                  {/* ==========================
-                      CONTENT
-                  ========================== */}
 
                   <div className="product-card__content">
                     <span className="product-card__category">
@@ -345,10 +261,6 @@ function ProductsShowcase() {
             )}
           </div>
         </div>
-
-        {/* ======================================
-            FOOTER
-        ====================================== */}
 
         <footer className="products__footer">
           <span>

@@ -48,12 +48,6 @@ function TechnologyShowcase() {
         return
       }
 
-      /*
-       * ==========================================
-       * INITIAL STATE
-       * ==========================================
-       */
-
       gsap.set(panels, {
         autoAlpha: 0,
         y: 40,
@@ -74,55 +68,24 @@ function TechnologyShowcase() {
         color: 'var(--color-accent)',
       })
 
-      /*
-       * ==========================================
-       * MAIN TIMELINE
-       * ==========================================
-       */
-
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
 
           start: 'top top',
-
-          /*
-           * Анимация заканчивается ровно там,
-           * где заканчивается сама Technology section.
-           */
           end: 'bottom bottom',
 
           pin: stageRef.current,
-
-          /*
-           * Scroll напрямую управляет
-           * прогрессом timeline.
-           */
           scrub: 1,
 
           anticipatePin: 1,
         },
-
-        /*
-         * Передаём progress в Three.js.
-         */
         onUpdate: () => {
   const progress =
     timeline.progress()
 
   coreProgress.current =
     progress
-
-  /*
-   * ==========================================
-   * ACTIVE TECHNOLOGY
-   * ==========================================
-   *
-   * 0.00 → AI
-   * 0.33 → ROBOTICS
-   * 0.66 → NEURAL
-   * 1.00 → QUANTUM
-   */
 
 const position =
   progress *
@@ -162,11 +125,6 @@ for (
   ) {
     return
   }
-
-  /*
-   * Не обновляем DOM,
-   * если состояние ещё не изменилось.
-   */
   if (
     activeNumberRef.current.dataset.index ===
     technology.number
@@ -191,23 +149,6 @@ for (
 },
       })
 
-      /*
-       * ==========================================
-       * GLOBAL ANIMATIONS
-       * ==========================================
-       *
-       * Весь timeline имеет диапазон:
-       *
-       * 0 → 3
-       *
-       * Поэтому:
-       *
-       * 0 = AI
-       * 1 = ROBOTICS
-       * 2 = NEURAL
-       * 3 = QUANTUM
-       */
-
       timeline.fromTo(
         '.technology__progress-fill',
         {
@@ -222,11 +163,6 @@ for (
         },
         0,
       )
-
-      /*
-       * CSS grid слегка движется
-       * на протяжении всей сцены.
-       */
       timeline.to(
         '.technology__visual-grid',
         {
@@ -238,12 +174,6 @@ for (
         0,
       )
 
-      /*
-       * ==========================================
-       * PANEL TRANSITIONS
-       * ==========================================
-       */
-
       panels.slice(1).forEach(
         (panel, index) => {
           const previousPanel =
@@ -254,33 +184,11 @@ for (
 
           const currentNumber =
             numbers[index + 1]
-
-          /*
-           * Граница:
-           *
-           * 1 = AI → ROBOTICS
-           * 2 = ROBOTICS → NEURAL
-           * 3 = NEURAL → QUANTUM
-           */
           const boundary =
             index + 1
-
-          /*
-           * Например:
-           *
-           * boundary = 1
-           *
-           * transition:
-           * 0.88 → 1
-           */
           const start =
             boundary -
             transitionSize
-
-          /*
-           * Предыдущая карточка
-           * исчезает.
-           */
           timeline.to(
             previousPanel,
             {
@@ -292,11 +200,6 @@ for (
             },
             start,
           )
-
-          /*
-           * Новая карточка
-           * появляется.
-           */
           timeline.to(
             panel,
             {
@@ -308,10 +211,6 @@ for (
             },
             start,
           )
-
-          /*
-           * Старый index.
-           */
           timeline.to(
             previousNumber,
             {
@@ -322,10 +221,6 @@ for (
             },
             start,
           )
-
-          /*
-           * Новый index.
-           */
           timeline.to(
             currentNumber,
             {
@@ -354,9 +249,6 @@ for (
         ref={stageRef}
         className="technology__stage"
       >
-        {/* ======================================
-            HEADER
-        ====================================== */}
 
         <header className="technology__header">
           <span>02</span>
@@ -365,10 +257,6 @@ for (
             THE NEXUS TECHNOLOGY
           </span>
         </header>
-
-        {/* ======================================
-            INTRO
-        ====================================== */}
 
         <div className="technology__intro">
           <span className="technology__eyebrow">
@@ -389,10 +277,6 @@ for (
             ecosystem.
           </p>
         </div>
-
-        {/* ======================================
-            TECHNOLOGY INDEX
-        ====================================== */}
 
         <div className="technology-index">
           {technologies.map(
@@ -469,10 +353,6 @@ for (
 </div>
           </div>
 
-          {/* ====================================
-              PANELS
-          ==================================== */}
-
           <div className="technology__panels">
             {technologies.map(
               (technology) => (
@@ -532,10 +412,6 @@ for (
             )}
           </div>
         </div>
-
-        {/* ======================================
-            FOOTER
-        ====================================== */}
 
         <footer className="technology__footer">
   <div className="technology__progress">
