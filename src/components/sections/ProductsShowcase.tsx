@@ -194,6 +194,7 @@ function ProductsShowcase() {
 
   return (
     <section
+      id="products"
       ref={sectionRef}
       className="products"
     >

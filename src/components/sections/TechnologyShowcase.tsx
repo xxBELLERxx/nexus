@@ -346,6 +346,7 @@ for (
 
   return (
     <section
+      id="technology"
       ref={sectionRef}
       className="technology"
     >
