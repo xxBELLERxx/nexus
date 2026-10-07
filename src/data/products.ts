@@ -1,3 +1,4 @@
+const IMAGE_BASE = `${import.meta.env.BASE_URL}images/manifesto`
 export interface Product {
   number: string
   name: string
@@ -19,7 +20,7 @@ export const products: Product[] = [
     code: 'NX-ONE-01',
     metric: '99.8%',
     metricLabel: 'SYSTEM ACCURACY',
-    image: '/images/products/nexus-one.png',
+    image: `${IMAGE_BASE}/images/products/nexus-one.png`,
   },
 
   {
@@ -31,7 +32,7 @@ export const products: Product[] = [
     code: 'NX-LINK-02',
     metric: '2.7',
     metricLabel: 'MS LATENCY',
-    image: '/images/products/nexus-link.png',
+    image: `${IMAGE_BASE}/images/products/nexus-link.png`,
   },
 
   {
@@ -43,7 +44,7 @@ export const products: Product[] = [
     code: 'NX-R-03',
     metric: '18.4',
     metricLabel: 'HOURS AUTONOMY',
-    image: '/images/products/nexus-r.png',
+    image: `${IMAGE_BASE}/images/products/nexus-r.png`,
   },
 
   {
@@ -55,6 +56,6 @@ export const products: Product[] = [
     code: 'NX-CORE-04',
     metric: '128',
     metricLabel: 'QUBITS',
-    image: '/images/products/nexus-core.png',
+    image: `${IMAGE_BASE}/images/products/nexus-core.png`,
   },
 ]
