@@ -55,7 +55,7 @@ function TechnologyShowcase() {
   scrollTrigger: {
     trigger: sectionRef.current,
     start: 'top top',
-    end: `+=${(panels.length - 1) * 1200}`,
+    end: 'bottom bottom',
     pin: stageRef.current,
     scrub: 1,
     anticipatePin: 1,
