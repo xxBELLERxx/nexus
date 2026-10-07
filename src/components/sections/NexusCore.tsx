@@ -58,7 +58,7 @@ function getStageBlend(
   ] = [0, 0, 0, 0]
 
   /*
-   * В самом начале всегда AI.
+   * Самое начало.
    */
   if (position <= 0) {
     weights[0] = 1
@@ -72,36 +72,36 @@ function getStageBlend(
   }
 
   /*
-   * В самом конце всегда QUANTUM.
-   */
-  if (position >= 3) {
-    weights[3] = 1
-
-    return {
-      index: 3,
-      next: 3,
-      progress: 1,
-      weights,
-    }
-  }
-
-  /*
-   * Проверяем близость к границам:
+   * Каждый следующий stage
+   * начинает появляться ПЕРЕД
+   * границей следующего этапа.
    *
-   * 1 = AI → ROBOTICS
-   * 2 = ROBOTICS → NEURAL
+   * 0.88 → 1.00 = AI → ROBOTICS
+   * 1.88 → 2.00 = ROBOTICS → NEURAL
+   * 2.88 → 3.00 = NEURAL → QUANTUM
    */
-  for (let boundary = 1; boundary <= 2; boundary++) {
-    const distance =
-      Math.abs(position - boundary)
 
-    if (distance <= transitionSize) {
+  for (
+    let boundary = 1;
+    boundary <= 3;
+    boundary++
+  ) {
+    const transitionStart =
+      boundary - transitionSize
+
+    /*
+     * Переход.
+     */
+    if (
+      position >= transitionStart &&
+      position < boundary
+    ) {
       const transitionProgress =
         (
           position -
-          (boundary - transitionSize)
+          transitionStart
         ) /
-        (transitionSize * 2)
+        transitionSize
 
       const smoothProgress =
         transitionProgress *
@@ -128,19 +128,34 @@ function getStageBlend(
         weights,
       }
     }
+
+    /*
+     * После границы состояние уже
+     * полностью переключено.
+     */
+    if (position < boundary) {
+      const currentStage =
+        boundary - 1
+
+      weights[currentStage] = 1
+
+      return {
+        index: currentStage,
+        next: currentStage,
+        progress: 1,
+        weights,
+      }
+    }
   }
 
   /*
-   * Если мы не в transition zone,
-   * существует только одно активное состояние.
+   * Финальный Quantum.
    */
-  const stageIndex = Math.floor(position)
-
-  weights[stageIndex] = 1
+  weights[3] = 1
 
   return {
-    index: stageIndex,
-    next: stageIndex,
+    index: 3,
+    next: 3,
     progress: 1,
     weights,
   }

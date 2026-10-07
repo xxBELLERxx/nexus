@@ -11,34 +11,47 @@ function TechnologyShowcase() {
   const sectionRef = useRef<HTMLElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
 
+  /*
+   * Общий progress для Three.js Core.
+   *
+   * 0   = AI
+   * 0.33 = ROBOTICS
+   * 0.66 = NEURAL
+   * 1   = QUANTUM
+   */
   const coreProgress = useRef(0)
 
   useGSAP(
     () => {
-      const panels = gsap.utils.toArray<HTMLElement>(
-        '.technology-panel',
-      )
+      const panels =
+        gsap.utils.toArray<HTMLElement>(
+          '.technology-panel',
+        )
 
-      const numbers = gsap.utils.toArray<HTMLElement>(
-        '.technology-index__item',
-      )
+      const numbers =
+        gsap.utils.toArray<HTMLElement>(
+          '.technology-index__item',
+        )
 
       if (
         !panels.length ||
+        !numbers.length ||
         !sectionRef.current ||
         !stageRef.current
       ) {
         return
       }
 
+      /*
+       * ==========================================
+       * INITIAL STATE
+       * ==========================================
+       */
+
       gsap.set(panels, {
         autoAlpha: 0,
         y: 40,
         scale: 0.97,
-      })
-
-      gsap.set(numbers, {
-        color: 'var(--color-text-muted)',
       })
 
       gsap.set(panels[0], {
@@ -47,108 +60,199 @@ function TechnologyShowcase() {
         scale: 1,
       })
 
+      gsap.set(numbers, {
+        color: 'var(--color-text-muted)',
+      })
+
       gsap.set(numbers[0], {
         color: 'var(--color-accent)',
       })
 
-      const timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: sectionRef.current,
-    start: 'top top',
-    end: 'bottom bottom',
-    pin: stageRef.current,
-    scrub: 1,
-    anticipatePin: 1,
-  },
+      /*
+       * ==========================================
+       * MAIN TIMELINE
+       * ==========================================
+       */
 
-  onUpdate: () => {
-    coreProgress.current = timeline.progress()
-  },
-})
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+
+          start: 'top top',
+
+          /*
+           * Анимация заканчивается ровно там,
+           * где заканчивается сама Technology section.
+           */
+          end: 'bottom bottom',
+
+          pin: stageRef.current,
+
+          /*
+           * Scroll напрямую управляет
+           * прогрессом timeline.
+           */
+          scrub: 1,
+
+          anticipatePin: 1,
+        },
+
+        /*
+         * Передаём progress в Three.js.
+         */
+        onUpdate: () => {
+          coreProgress.current =
+            timeline.progress()
+        },
+      })
 
       /*
-       * Progress line.
+       * ==========================================
+       * GLOBAL ANIMATIONS
+       * ==========================================
+       *
+       * Весь timeline имеет диапазон:
+       *
+       * 0 → 3
+       *
+       * Поэтому:
+       *
+       * 0 = AI
+       * 1 = ROBOTICS
+       * 2 = NEURAL
+       * 3 = QUANTUM
        */
+
       timeline.fromTo(
         '.technology__progress-fill',
         {
           scaleX: 0,
-          transformOrigin: 'left center',
+          transformOrigin:
+            'left center',
         },
         {
           scaleX: 1,
-          duration: panels.length - 1,
+          duration: 3,
           ease: 'none',
         },
         0,
       )
 
       /*
-       * Grid movement.
+       * CSS grid слегка движется
+       * на протяжении всей сцены.
        */
       timeline.to(
         '.technology__visual-grid',
         {
           rotationZ: 8,
           scale: 1.08,
-          duration: panels.length - 1,
+          duration: 3,
           ease: 'none',
         },
         0,
       )
 
       /*
-       * Panel transitions.
+       * ==========================================
+       * PANEL TRANSITIONS
+       * ==========================================
        */
+
+      const transitionSize = 0.12
+
       panels.slice(1).forEach(
         (panel, index) => {
-          const previousPanel = panels[index]
-          const previousNumber = numbers[index]
-          const currentNumber = numbers[index + 1]
+          const previousPanel =
+            panels[index]
 
-          timeline
-            .to(
-              previousPanel,
-              {
-                autoAlpha: 0,
-                y: -35,
-                scale: 1.03,
-                duration: 1,
-                ease: 'power2.inOut',
-              },
-            )
+          const previousNumber =
+            numbers[index]
 
-            .to(
-              panel,
-              {
-                autoAlpha: 1,
-                y: 0,
-                scale: 1,
-                duration: 1,
-                ease: 'power2.out',
-              },
-              '<0.15',
-            )
+          const currentNumber =
+            numbers[index + 1]
 
-            .to(
-              previousNumber,
-              {
-                color:
-                  'var(--color-text-muted)',
-                duration: 0.4,
-              },
-              '<',
-            )
+          /*
+           * Граница:
+           *
+           * 1 = AI → ROBOTICS
+           * 2 = ROBOTICS → NEURAL
+           * 3 = NEURAL → QUANTUM
+           */
+          const boundary =
+            index + 1
 
-            .to(
-              currentNumber,
-              {
-                color:
-                  'var(--color-accent)',
-                duration: 0.4,
-              },
-              '<',
-            )
+          /*
+           * Например:
+           *
+           * boundary = 1
+           *
+           * transition:
+           * 0.88 → 1
+           */
+          const start =
+            boundary -
+            transitionSize
+
+          /*
+           * Предыдущая карточка
+           * исчезает.
+           */
+          timeline.to(
+            previousPanel,
+            {
+              autoAlpha: 0,
+              y: -35,
+              scale: 1.03,
+              duration: transitionSize,
+              ease: 'power2.inOut',
+            },
+            start,
+          )
+
+          /*
+           * Новая карточка
+           * появляется.
+           */
+          timeline.to(
+            panel,
+            {
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              duration: transitionSize,
+              ease: 'power2.out',
+            },
+            start,
+          )
+
+          /*
+           * Старый index.
+           */
+          timeline.to(
+            previousNumber,
+            {
+              color:
+                'var(--color-text-muted)',
+              duration: transitionSize,
+              ease: 'none',
+            },
+            start,
+          )
+
+          /*
+           * Новый index.
+           */
+          timeline.to(
+            currentNumber,
+            {
+              color:
+                'var(--color-accent)',
+              duration: transitionSize,
+              ease: 'none',
+            },
+            start,
+          )
         },
       )
     },
@@ -166,6 +270,10 @@ function TechnologyShowcase() {
         ref={stageRef}
         className="technology__stage"
       >
+        {/* ======================================
+            HEADER
+        ====================================== */}
+
         <header className="technology__header">
           <span>02</span>
 
@@ -173,6 +281,10 @@ function TechnologyShowcase() {
             THE NEXUS TECHNOLOGY
           </span>
         </header>
+
+        {/* ======================================
+            INTRO
+        ====================================== */}
 
         <div className="technology__intro">
           <span className="technology__eyebrow">
@@ -188,10 +300,15 @@ function TechnologyShowcase() {
           </h2>
 
           <p className="technology__intro-description">
-            Four disciplines. One interconnected
-            technological ecosystem.
+            Four disciplines. One
+            interconnected technological
+            ecosystem.
           </p>
         </div>
+
+        {/* ======================================
+            TECHNOLOGY INDEX
+        ====================================== */}
 
         <div className="technology-index">
           {technologies.map(
@@ -212,18 +329,28 @@ function TechnologyShowcase() {
           )}
         </div>
 
+        {/* ======================================
+            SHOWCASE
+        ====================================== */}
+
         <div className="technology__showcase">
           <div className="technology__visual">
-  <NexusCore
-    progressRef={coreProgress}
-  />
+            <NexusCore
+              progressRef={
+                coreProgress
+              }
+            />
 
-  <div className="technology__visual-grid" />
+            <div className="technology__visual-grid" />
 
-  <div className="technology__visual-label">
-    NEXUS CORE
-  </div>
-</div>
+            <div className="technology__visual-label">
+              NEXUS CORE
+            </div>
+          </div>
+
+          {/* ====================================
+              PANELS
+          ==================================== */}
 
           <div className="technology__panels">
             {technologies.map(
@@ -252,23 +379,31 @@ function TechnologyShowcase() {
                     </h3>
 
                     <p>
-                      {technology.description}
+                      {
+                        technology.description
+                      }
                     </p>
                   </div>
 
                   <div className="technology-panel__metric">
                     <div>
                       <span className="technology-panel__metric-value">
-                        {technology.metric}
+                        {
+                          technology.metric
+                        }
                       </span>
 
                       <span className="technology-panel__metric-unit">
-                        {technology.metricLabel}
+                        {
+                          technology.metricLabel
+                        }
                       </span>
                     </div>
 
                     <span className="technology-panel__metric-label">
-                      {technology.label}
+                      {
+                        technology.label
+                      }
                     </span>
                   </div>
                 </article>
@@ -276,6 +411,10 @@ function TechnologyShowcase() {
             )}
           </div>
         </div>
+
+        {/* ======================================
+            FOOTER
+        ====================================== */}
 
         <footer className="technology__footer">
           <div className="technology__progress">
@@ -286,7 +425,9 @@ function TechnologyShowcase() {
             SCROLL TO EXPLORE
           </span>
 
-          <span>03 / 07</span>
+          <span>
+            03 / 07
+          </span>
         </footer>
       </div>
     </section>
