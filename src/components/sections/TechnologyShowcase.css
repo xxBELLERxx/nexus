@@ -5,9 +5,9 @@
 
   background:
     radial-gradient(
-      circle at 75% 50%,
-      rgba(0, 200, 255, 0.07),
-      transparent 38%
+      circle at 65% 48%,
+      rgba(0, 200, 255, 0.055),
+      transparent 40%
     ),
     var(--color-bg);
 }
@@ -58,16 +58,16 @@
 
   z-index: 10;
 
-  top: 19%;
+  top: 18%;
   left: var(--page-padding);
 
-  width: min(680px, 52vw);
+  width: min(610px, 43vw);
 }
 
 .technology__eyebrow {
   display: block;
 
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 
   font-family: var(--font-mono);
   font-size: 10px;
@@ -81,10 +81,11 @@
   margin: 0;
 
   font-family: var(--font-display);
+
   font-size: clamp(
-    46px,
-    6vw,
-    94px
+    44px,
+    5.6vw,
+    88px
   );
 
   font-weight: 400;
@@ -100,9 +101,11 @@
 }
 
 .technology__intro-description {
-  width: 320px;
+  width: 300px;
 
-  margin-top: 28px;
+  margin-top: 24px;
+
+  font-family: var(--font-body);
 
   font-size: 13px;
   line-height: 1.7;
@@ -119,19 +122,23 @@
 
   z-index: 12;
 
-  top: 20%;
-  right: var(--page-padding);
+  top: 18%;
+  right: 8%;
 
   display: flex;
   flex-direction: column;
 
-  gap: 14px;
+  gap: 13px;
+
+  width: 150px;
 }
 
 .technology-index__item {
-  display: flex;
+  display: grid;
 
-  gap: 18px;
+  grid-template-columns: 22px 1fr;
+
+  gap: 14px;
 
   font-family: var(--font-mono);
   font-size: 9px;
@@ -141,11 +148,16 @@
   color: var(--color-text-muted);
 
   transition:
-    color 250ms ease;
+    color 250ms ease,
+    transform 250ms ease;
 }
 
 .technology-index__item span:first-child {
   width: 22px;
+}
+
+.technology-index__item:hover {
+  transform: translateX(-3px);
 }
 
 /* ==========================================
@@ -155,16 +167,19 @@
 .technology-hud {
   position: absolute;
 
-  top: 47%;
-  right: var(--page-padding);
-
   z-index: 12;
 
-  width: 190px;
+  top: 53%;
+  right: 7%;
+
+  width: 220px;
+
+  transform: translateY(-50%);
 }
 
 .technology-hud__header {
   display: flex;
+
   justify-content: space-between;
 
   font-family: var(--font-mono);
@@ -182,13 +197,16 @@
 .technology-hud__name {
   margin-top: 14px;
 
+  max-width: 200px;
+
   font-family: var(--font-display);
-  font-size: 18px;
+
+  font-size: 19px;
   font-weight: 400;
 
   line-height: 1;
 
-  letter-spacing: -0.025em;
+  letter-spacing: -0.03em;
 
   text-transform: uppercase;
 }
@@ -204,6 +222,7 @@
 
 .technology-hud__row {
   display: flex;
+
   justify-content: space-between;
 
   margin-top: 8px;
@@ -232,6 +251,7 @@
 
 .technology__showcase {
   position: absolute;
+
   inset: 0;
 }
 
@@ -244,10 +264,10 @@
 
   z-index: 2;
 
-  top: 50%;
-  right: 3%;
+  top: 51%;
+  right: 8%;
 
-  width: min(46vw, 680px);
+  width: min(52vw, 780px);
   aspect-ratio: 1;
 
   transform: translateY(-50%);
@@ -259,15 +279,16 @@
   content: '';
 
   position: absolute;
-  inset: 10%;
+
+  inset: 6%;
 
   border-radius: 50%;
 
   background:
     radial-gradient(
       circle,
-      rgba(0, 200, 255, 0.06),
-      transparent 65%
+      rgba(0, 200, 255, 0.07),
+      transparent 66%
     );
 
   pointer-events: none;
@@ -311,8 +332,8 @@
 .technology__visual-label {
   position: absolute;
 
-  right: 15%;
-  bottom: 16%;
+  right: 7%;
+  bottom: 11%;
 
   z-index: 4;
 
@@ -337,6 +358,7 @@
 
 .technology__panels {
   position: absolute;
+
   inset: 0;
 
   z-index: 8;
@@ -349,14 +371,18 @@
 
   left: var(--page-padding);
 
-  bottom: 11%;
+  /*
+   * Карточка теперь чуть выше и ближе
+   * к центральной части композиции.
+   */
+  bottom: 13%;
 
   width: min(
-    470px,
-    34vw
+    430px,
+    30vw
   );
 
-  min-height: 320px;
+  min-height: 300px;
 
   padding: 26px;
 
@@ -387,9 +413,10 @@
 
 .technology-panel__top {
   display: flex;
+
   justify-content: space-between;
 
-  margin-bottom: 55px;
+  margin-bottom: 48px;
 
   font-family: var(--font-mono);
   font-size: 9px;
@@ -402,7 +429,7 @@
 .technology-panel__category {
   display: block;
 
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 
   font-family: var(--font-mono);
   font-size: 8px;
@@ -413,14 +440,14 @@
 }
 
 .technology-panel__body h3 {
-  margin: 0 0 16px;
+  margin: 0 0 15px;
 
   font-family: var(--font-display);
 
   font-size: clamp(
-    26px,
-    2.8vw,
-    42px
+    25px,
+    2.5vw,
+    38px
   );
 
   font-weight: 400;
@@ -431,9 +458,14 @@
 }
 
 .technology-panel__body p {
-  width: min(390px, 100%);
+  width: min(
+    360px,
+    100%
+  );
 
   margin: 0;
+
+  font-family: var(--font-body);
 
   font-size: 13px;
 
@@ -452,7 +484,7 @@
   justify-content: space-between;
   align-items: flex-end;
 
-  margin-top: 42px;
+  margin-top: 38px;
 }
 
 .technology-panel__metric > div {
@@ -466,7 +498,7 @@
 .technology-panel__metric-value {
   font-family: var(--font-display);
 
-  font-size: 48px;
+  font-size: 46px;
   line-height: 0.8;
 
   letter-spacing: -0.04em;
@@ -474,6 +506,7 @@
 
 .technology-panel__metric-unit {
   font-family: var(--font-mono);
+
   font-size: 9px;
 
   color: var(--color-accent);
@@ -481,6 +514,7 @@
 
 .technology-panel__metric-label {
   font-family: var(--font-mono);
+
   font-size: 8px;
 
   letter-spacing: 0.12em;
@@ -506,7 +540,10 @@
   display: grid;
 
   grid-template-columns:
-    1fr auto auto auto;
+    1fr
+    auto
+    auto
+    auto;
 
   align-items: center;
 
@@ -528,7 +565,8 @@
   width: 100%;
   height: 1px;
 
-  background: var(--color-border);
+  background:
+    var(--color-border);
 
   overflow: hidden;
 }
@@ -537,19 +575,58 @@
   width: 100%;
   height: 100%;
 
-  background: var(--color-accent);
+  background:
+    var(--color-accent);
 
   transform: scaleX(0);
 
-  transform-origin: left center;
+  transform-origin:
+    left center;
 
   box-shadow:
     0 0 10px
-      rgba(0, 200, 255, 0.8);
+      rgba(
+        0,
+        200,
+        255,
+        0.8
+      );
 }
 
 /* ==========================================
    TABLET
+========================================== */
+
+@media (max-width: 1200px) {
+  .technology__visual {
+    right: 2%;
+
+    width: min(
+      56vw,
+      700px
+    );
+  }
+
+  .technology-hud {
+    right: 2%;
+
+    width: 190px;
+  }
+
+  .technology-index {
+    right: 2%;
+  }
+
+  .technology-panel {
+    width: min(
+      420px,
+      34vw
+    );
+  }
+}
+
+/* ==========================================
+   MOBILE / TABLET
 ========================================== */
 
 @media (max-width: 900px) {
@@ -571,7 +648,8 @@
   }
 
   .technology__visual {
-    right: -15%;
+    top: 52%;
+    right: -12%;
 
     width: 82vw;
   }
@@ -616,7 +694,8 @@
     top: 17%;
     left: 20px;
 
-    width: calc(100vw - 40px);
+    width:
+      calc(100vw - 40px);
   }
 
   .technology__intro h2 {
@@ -674,10 +753,6 @@
       1fr auto;
   }
 
-  /*
-   * На мобильном оставляем только
-   * progress и номер секции.
-   */
   .technology__footer span:nth-of-type(1),
   .technology__footer span:nth-of-type(2) {
     display: none;
