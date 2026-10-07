@@ -1,4 +1,4 @@
-const IMAGE_BASE = `${import.meta.env.BASE_URL}images/manifesto`
+const IMAGE_BASE = `${import.meta.env.BASE_URL}images/products`
 export interface Product {
   number: string
   name: string
