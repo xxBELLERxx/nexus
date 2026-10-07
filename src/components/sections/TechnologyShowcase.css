@@ -171,7 +171,7 @@
 
   transform: translateY(-50%);
 
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .technology__visual-grid {

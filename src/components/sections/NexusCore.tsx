@@ -17,32 +17,640 @@ interface NexusCoreProps {
   progressRef: MutableRefObject<number>
 }
 
-const stageColors = [
-  '#00C8FF',
-  '#4DE8FF',
-  '#7C5CFF',
-  '#8AE9FF',
+type StageBlend = {
+  index: number
+  next: number
+  progress: number
+  weights: [number, number, number, number]
+}
+
+const STAGE_COLORS = [
+  new THREE.Color('#00C8FF'),
+  new THREE.Color('#A9D9E8'),
+  new THREE.Color('#7C5CFF'),
+  new THREE.Color('#B7F5FF'),
 ]
 
-const stageScales = [
+const STAGE_SCALES = [
   1,
-  1.12,
-  0.88,
-  1.2,
+  1.08,
+  0.9,
+  1.18,
 ]
 
-const stageSpeeds = [
-  0.07,
-  0.12,
-  0.2,
-  0.32,
-]
+function getStageBlend(
+  progress: number,
+): StageBlend {
+  const position = THREE.MathUtils.clamp(
+    progress * 3,
+    0,
+    3,
+  )
+
+  const index = Math.min(
+    Math.floor(position),
+    2,
+  )
+
+  const next = index + 1
+
+  const localProgress =
+    position - index
+
+  const smoothProgress =
+    localProgress *
+    localProgress *
+    (3 - 2 * localProgress)
+
+  const weights: [
+    number,
+    number,
+    number,
+    number,
+  ] = [0, 0, 0, 0]
+
+  if (position >= 3) {
+    weights[3] = 1
+  } else {
+    weights[index] =
+      1 - smoothProgress
+
+    weights[next] =
+      smoothProgress
+  }
+
+  return {
+    index,
+    next,
+    progress: smoothProgress,
+    weights,
+  }
+}
 
 /* =========================================================
-   PARTICLE FIELD
+   AI — INTELLIGENCE FIELD
 ========================================================= */
 
-function ParticleField({
+function IntelligenceField({
+  progressRef,
+}: NexusCoreProps) {
+  const pointsRef =
+    useRef<THREE.Points>(null)
+
+  const materialRef =
+    useRef<THREE.PointsMaterial>(null)
+
+  const connectionsRef =
+    useRef<THREE.LineSegments>(null)
+
+  const connectionMaterialRef =
+    useRef<THREE.LineBasicMaterial>(null)
+
+  const nodes = useMemo(() => {
+    const count = 34
+
+    const positions = new Float32Array(
+      count * 3,
+    )
+
+    for (let i = 0; i < count; i++) {
+      const radius = 1.2
+
+      const theta =
+        (i / count) *
+        Math.PI *
+        2
+
+      const phi =
+        Math.acos(
+          1 -
+            (2 * (i + 0.5)) /
+              count,
+        )
+
+      const index = i * 3
+
+      positions[index] =
+        radius *
+        Math.sin(phi) *
+        Math.cos(theta)
+
+      positions[index + 1] =
+        radius *
+        Math.sin(phi) *
+        Math.sin(theta)
+
+      positions[index + 2] =
+        radius *
+        Math.cos(phi)
+    }
+
+    return positions
+  }, [])
+
+  const connectionPositions =
+    useMemo(() => {
+      const center =
+        new THREE.Vector3(
+          0,
+          0,
+          0,
+        )
+
+      const lines: number[] = []
+
+      for (
+        let i = 0;
+        i < nodes.length;
+        i += 3
+      ) {
+        lines.push(
+          center.x,
+          center.y,
+          center.z,
+
+          nodes[i],
+          nodes[i + 1],
+          nodes[i + 2],
+        )
+      }
+
+      return new Float32Array(lines)
+    }, [nodes])
+
+  useFrame(
+    (state, delta) => {
+      if (
+        !pointsRef.current ||
+        !materialRef.current ||
+        !connectionsRef.current ||
+        !connectionMaterialRef.current
+      ) {
+        return
+      }
+
+      const blend =
+        getStageBlend(
+          progressRef.current,
+        )
+
+      const opacity =
+        blend.weights[0]
+
+      materialRef.current.opacity =
+        opacity * 0.85
+
+      connectionMaterialRef.current.opacity =
+        opacity * 0.3
+
+      pointsRef.current.rotation.y +=
+        delta * 0.08
+
+      connectionsRef.current.rotation.y +=
+        delta * 0.08
+
+      const pulse =
+        1 +
+        Math.sin(
+          state.clock.elapsedTime *
+            1.5,
+        ) *
+          0.04
+
+      pointsRef.current.scale.setScalar(
+        pulse,
+      )
+    },
+  )
+
+  return (
+    <group>
+      <points ref={pointsRef}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            args={[nodes, 3]}
+          />
+        </bufferGeometry>
+
+        <pointsMaterial
+          ref={materialRef}
+          color="#00C8FF"
+          size={0.055}
+          transparent
+          opacity={0}
+          depthWrite={false}
+          blending={
+            THREE.AdditiveBlending
+          }
+        />
+      </points>
+
+      <lineSegments
+        ref={connectionsRef}
+      >
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            args={[
+              connectionPositions,
+              3,
+            ]}
+          />
+        </bufferGeometry>
+
+        <lineBasicMaterial
+          ref={connectionMaterialRef}
+          color="#00C8FF"
+          transparent
+          opacity={0}
+          depthWrite={false}
+          blending={
+            THREE.AdditiveBlending
+          }
+        />
+      </lineSegments>
+    </group>
+  )
+}
+
+/* =========================================================
+   ROBOTICS — MECHANICAL CORE
+========================================================= */
+
+function RoboticsStructure({
+  progressRef,
+}: NexusCoreProps) {
+  const groupRef =
+    useRef<THREE.Group>(null)
+
+  const materialRefs = useRef<
+    THREE.MeshBasicMaterial[]
+  >([])
+
+  useFrame(
+    (_, delta) => {
+      if (!groupRef.current) {
+        return
+      }
+
+      const blend =
+        getStageBlend(
+          progressRef.current,
+        )
+
+      const opacity =
+        blend.weights[1]
+
+      materialRefs.current.forEach(
+        (material) => {
+          material.opacity =
+            opacity * 0.65
+        },
+      )
+
+      groupRef.current.rotation.y +=
+        delta * 0.16
+
+      groupRef.current.rotation.z -=
+        delta * 0.05
+    },
+  )
+
+  return (
+    <group ref={groupRef}>
+      {/* Central mechanical rings */}
+
+      <mesh rotation={[0.8, 0.2, 0.1]}>
+        <torusGeometry
+          args={[
+            1.35,
+            0.025,
+            10,
+            96,
+          ]}
+        />
+
+        <meshBasicMaterial
+          ref={(material) => {
+            if (material) {
+              materialRefs.current[0] =
+                material
+            }
+          }}
+          color="#A9D9E8"
+          transparent
+          opacity={0}
+          depthWrite={false}
+        />
+      </mesh>
+
+      <mesh rotation={[0.2, 1, -0.4]}>
+        <torusGeometry
+          args={[
+            1.65,
+            0.02,
+            10,
+            96,
+          ]}
+        />
+
+        <meshBasicMaterial
+          ref={(material) => {
+            if (material) {
+              materialRefs.current[1] =
+                material
+            }
+          }}
+          color="#A9D9E8"
+          transparent
+          opacity={0}
+          depthWrite={false}
+        />
+      </mesh>
+
+      <mesh rotation={[1.5, -0.3, 0.8]}>
+        <torusGeometry
+          args={[
+            1.9,
+            0.015,
+            10,
+            96,
+          ]}
+        />
+
+        <meshBasicMaterial
+          ref={(material) => {
+            if (material) {
+              materialRefs.current[2] =
+                material
+            }
+          }}
+          color="#A9D9E8"
+          transparent
+          opacity={0}
+          depthWrite={false}
+        />
+      </mesh>
+
+      {/* Mechanical modules */}
+
+      {Array.from({
+        length: 8,
+      }).map((_, index) => {
+        const angle =
+          (index / 8) *
+          Math.PI *
+          2
+
+        const radius = 1.65
+
+        return (
+          <mesh
+            key={index}
+            position={[
+              Math.cos(angle) *
+                radius,
+
+              Math.sin(angle) *
+                radius,
+
+              0,
+            ]}
+            rotation={[
+              0,
+              0,
+              angle,
+            ]}
+          >
+            <boxGeometry
+              args={[
+                0.2,
+                0.5,
+                0.2,
+              ]}
+            />
+
+            <meshBasicMaterial
+              ref={(material) => {
+                if (
+                  material
+                ) {
+                  materialRefs.current[
+                    index + 3
+                  ] = material
+                }
+              }}
+              color="#A9D9E8"
+              transparent
+              opacity={0}
+              depthWrite={false}
+            />
+          </mesh>
+        )
+      })}
+    </group>
+  )
+}
+
+/* =========================================================
+   NEURAL — NETWORK
+========================================================= */
+
+function NeuralNetwork({
+  progressRef,
+}: NexusCoreProps) {
+  const groupRef =
+    useRef<THREE.Group>(null)
+
+  const nodesRef =
+    useRef<THREE.Points>(null)
+
+  const linesRef =
+    useRef<THREE.LineSegments>(
+      null,
+    )
+
+  const nodeMaterialRef =
+    useRef<THREE.PointsMaterial>(null)
+
+  const lineMaterialRef =
+    useRef<THREE.LineBasicMaterial>(null)
+
+  const { nodePositions, linePositions } =
+    useMemo(() => {
+      const count = 90
+
+      const nodes =
+        new Float32Array(
+          count * 3,
+        )
+
+      for (
+        let i = 0;
+        i < count;
+        i++
+      ) {
+        const side =
+          i % 2 === 0
+            ? -1
+            : 1
+
+        const index = i * 3
+
+        nodes[index] =
+          side *
+          (0.35 +
+            Math.random() *
+              1.55)
+
+        nodes[index + 1] =
+          (Math.random() - 0.5) *
+          2.5
+
+        nodes[index + 2] =
+          (Math.random() - 0.5) *
+          2
+      }
+
+      const lines: number[] = []
+
+      for (
+        let i = 0;
+        i < count - 1;
+        i++
+      ) {
+        const a = i * 3
+
+        const b =
+          (i + 1) * 3
+
+        lines.push(
+          nodes[a],
+          nodes[a + 1],
+          nodes[a + 2],
+
+          nodes[b],
+          nodes[b + 1],
+          nodes[b + 2],
+        )
+      }
+
+      return {
+        nodePositions: nodes,
+        linePositions:
+          new Float32Array(
+            lines,
+          ),
+      }
+    }, [])
+
+  useFrame(
+    (state, delta) => {
+      if (
+        !groupRef.current ||
+        !nodesRef.current ||
+        !linesRef.current ||
+        !nodeMaterialRef.current ||
+        !lineMaterialRef.current
+      ) {
+        return
+      }
+
+      const blend =
+        getStageBlend(
+          progressRef.current,
+        )
+
+      const opacity =
+        blend.weights[2]
+
+      nodeMaterialRef.current.opacity =
+        opacity * 0.9
+
+      lineMaterialRef.current.opacity =
+        opacity * 0.5
+
+      groupRef.current.rotation.y +=
+        delta * 0.04
+
+      groupRef.current.rotation.x =
+        Math.sin(
+          state.clock.elapsedTime *
+            0.4,
+        ) * 0.08
+
+      const pulse =
+        1 +
+        Math.sin(
+          state.clock.elapsedTime *
+            2,
+        ) *
+          0.04
+
+      nodesRef.current.scale.setScalar(
+        pulse,
+      )
+    },
+  )
+
+  return (
+    <group ref={groupRef}>
+      <points ref={nodesRef}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            args={[
+              nodePositions,
+              3,
+            ]}
+          />
+        </bufferGeometry>
+
+        <pointsMaterial
+          ref={nodeMaterialRef}
+          color="#7C5CFF"
+          size={0.04}
+          transparent
+          opacity={0}
+          depthWrite={false}
+          blending={
+            THREE.AdditiveBlending
+          }
+        />
+      </points>
+
+      <lineSegments ref={linesRef}>
+        <bufferGeometry>
+          <bufferAttribute
+            attach="attributes-position"
+            args={[
+              linePositions,
+              3,
+            ]}
+          />
+        </bufferGeometry>
+
+        <lineBasicMaterial
+          ref={lineMaterialRef}
+          color="#7C5CFF"
+          transparent
+          opacity={0}
+          depthWrite={false}
+          blending={
+            THREE.AdditiveBlending
+          }
+        />
+      </lineSegments>
+    </group>
+  )
+}
+
+/* =========================================================
+   QUANTUM — UNSTABLE FIELD
+========================================================= */
+
+function QuantumField({
   progressRef,
 }: NexusCoreProps) {
   const pointsRef =
@@ -52,59 +660,52 @@ function ParticleField({
     useRef<THREE.PointsMaterial>(null)
 
   const positions = useMemo(() => {
-    const count = 1800
-    const radius = 2.25
+    const count = 1100
 
-    const data = new Float32Array(
-      count * 3,
-    )
+    const data =
+      new Float32Array(
+        count * 3,
+      )
 
-    for (let i = 0; i < count; i++) {
+    for (
+      let i = 0;
+      i < count;
+      i++
+    ) {
       const index = i * 3
 
       const theta =
-        Math.random() * Math.PI * 2
+        Math.random() *
+        Math.PI *
+        2
 
       const phi =
         Math.acos(
           2 * Math.random() - 1,
         )
 
-      const distance =
-        Math.cbrt(Math.random()) *
-        radius
+      const radius =
+        0.8 +
+        Math.random() *
+          2.3
 
       data[index] =
-        distance *
         Math.sin(phi) *
-        Math.cos(theta)
+        Math.cos(theta) *
+        radius
 
       data[index + 1] =
-        distance *
         Math.sin(phi) *
-        Math.sin(theta)
+        Math.sin(theta) *
+        radius
 
       data[index + 2] =
-        distance *
-        Math.cos(phi)
+        Math.cos(phi) *
+        radius
     }
 
     return data
   }, [])
-
-  const colors = useMemo(
-    () =>
-      stageColors.map(
-        (color) =>
-          new THREE.Color(color),
-      ),
-    [],
-  )
-
-  const currentColor = useMemo(
-    () => new THREE.Color(),
-    [],
-  )
 
   useFrame(
     (state, delta) => {
@@ -115,110 +716,32 @@ function ParticleField({
         return
       }
 
-      const progress =
-        THREE.MathUtils.clamp(
+      const blend =
+        getStageBlend(
           progressRef.current,
-          0,
-          0.999999,
         )
 
-      /*
-       * 0 → 3
-       *
-       * 0 = AI
-       * 1 = ROBOTICS
-       * 2 = NEURAL
-       * 3 = QUANTUM
-       */
-      const stagePosition =
-        progress * 3
+      const opacity =
+        blend.weights[3]
 
-      const stageIndex =
-        Math.floor(stagePosition)
-
-      const nextStage =
-        Math.min(
-          stageIndex + 1,
-          3,
-        )
-
-      const localProgress =
-        stagePosition -
-        stageIndex
-
-      /*
-       * Smoothstep делает transition
-       * значительно естественнее.
-       */
-      const smoothProgress =
-        localProgress *
-        localProgress *
-        (3 -
-          2 * localProgress)
-
-      /*
-       * Масштаб particle field.
-       */
-      const scale =
-        THREE.MathUtils.lerp(
-          stageScales[stageIndex],
-          stageScales[nextStage],
-          smoothProgress,
-        )
-
-      pointsRef.current.scale.setScalar(
-        scale,
-      )
-
-      /*
-       * Цвет частиц.
-       */
-      currentColor
-        .copy(colors[stageIndex])
-        .lerp(
-          colors[nextStage],
-          smoothProgress,
-        )
-
-      materialRef.current.color.lerp(
-        currentColor,
-        Math.min(
-          delta * 5,
-          1,
-        ),
-      )
-
-      /*
-       * Скорость вращения зависит
-       * от текущей технологии.
-       */
-      const rotationSpeed =
-        THREE.MathUtils.lerp(
-          stageSpeeds[stageIndex],
-          stageSpeeds[nextStage],
-          smoothProgress,
-        )
+      materialRef.current.opacity =
+        opacity * 0.72
 
       pointsRef.current.rotation.y +=
-        delta * rotationSpeed
+        delta * 0.18
 
-      pointsRef.current.rotation.x +=
-        delta *
-        rotationSpeed *
-        0.35
+      pointsRef.current.rotation.x -=
+        delta * 0.08
 
-      /*
-       * Небольшое дыхание.
-       */
       const pulse =
         1 +
         Math.sin(
           state.clock.elapsedTime *
-            1.3,
+            2.4,
         ) *
-          0.025
+          0.12
 
-      pointsRef.current.scale.multiplyScalar(
+      pointsRef.current.scale.setScalar(
         pulse,
       )
     },
@@ -235,11 +758,10 @@ function ParticleField({
 
       <pointsMaterial
         ref={materialRef}
-        color={stageColors[0]}
-        size={0.025}
-        sizeAttenuation
+        color="#B7F5FF"
+        size={0.022}
         transparent
-        opacity={0.68}
+        opacity={0}
         depthWrite={false}
         blending={
           THREE.AdditiveBlending
@@ -250,7 +772,7 @@ function ParticleField({
 }
 
 /* =========================================================
-   CORE
+   CENTRAL CORE
 ========================================================= */
 
 function CoreSphere({
@@ -266,10 +788,34 @@ function CoreSphere({
     useRef<THREE.Mesh>(null)
 
   const outerMaterialRef =
-    useRef<THREE.MeshBasicMaterial>(null)
+    useRef<THREE.MeshBasicMaterial>(
+      null,
+    )
 
   const innerMaterialRef =
-    useRef<THREE.MeshBasicMaterial>(null)
+    useRef<THREE.MeshBasicMaterial>(
+      null,
+    )
+
+  const currentColor =
+    useMemo(
+      () =>
+        new THREE.Color(
+          '#00C8FF',
+        ),
+      [],
+    )
+
+  const targetScale =
+    useMemo(
+      () =>
+        new THREE.Vector3(
+          1,
+          1,
+          1,
+        ),
+      [],
+    )
 
   useFrame(
     (state, delta) => {
@@ -283,43 +829,49 @@ function CoreSphere({
         return
       }
 
-      const progress =
-        THREE.MathUtils.clamp(
+      const blend =
+        getStageBlend(
           progressRef.current,
-          0,
-          0.999999,
         )
 
-      const stagePosition =
-        progress * 3
+      currentColor
+        .copy(
+          STAGE_COLORS[
+            blend.index
+          ],
+        )
+        .lerp(
+          STAGE_COLORS[
+            blend.next
+          ],
+          blend.progress,
+        )
 
-      const stageIndex =
-        Math.floor(stagePosition)
-
-      const nextStage =
+      outerMaterialRef.current.color.lerp(
+        currentColor,
         Math.min(
-          stageIndex + 1,
-          3,
-        )
+          delta * 6,
+          1,
+        ),
+      )
 
-      const localProgress =
-        stagePosition -
-        stageIndex
+      innerMaterialRef.current.color.lerp(
+        currentColor,
+        Math.min(
+          delta * 8,
+          1,
+        ),
+      )
 
-      const smoothProgress =
-        localProgress *
-        localProgress *
-        (3 -
-          2 * localProgress)
-
-      /*
-       * Core scale.
-       */
-      const targetScale =
+      const stageScale =
         THREE.MathUtils.lerp(
-          stageScales[stageIndex],
-          stageScales[nextStage],
-          smoothProgress,
+          STAGE_SCALES[
+            blend.index
+          ],
+          STAGE_SCALES[
+            blend.next
+          ],
+          blend.progress,
         )
 
       const pulse =
@@ -330,40 +882,37 @@ function CoreSphere({
         ) *
           0.025
 
-const finalScale =
-  targetScale * pulse
+      const finalScale =
+        stageScale * pulse
 
-const smoothing =
-  Math.min(
-    delta * 5,
-    1,
-  )
+      targetScale.set(
+        finalScale,
+        finalScale,
+        finalScale,
+      )
 
-groupRef.current.scale.x +=
-  (finalScale -
-    groupRef.current.scale.x) *
-  smoothing
-
-groupRef.current.scale.y =
-  groupRef.current.scale.x
-
-groupRef.current.scale.z =
-  groupRef.current.scale.x
+      groupRef.current.scale.lerp(
+        targetScale,
+        Math.min(
+          delta * 5,
+          1,
+        ),
+      )
 
       /*
-       * Постоянное вращение.
+       * General rotation.
        */
       groupRef.current.rotation.y +=
         delta * 0.12
 
       /*
-       * Реакция на мышь.
+       * Mouse interaction.
        */
       const targetRotationX =
         -state.pointer.y * 0.16
 
       const targetRotationY =
-        state.pointer.x * 0.22
+        state.pointer.x * 0.2
 
       groupRef.current.rotation.x +=
         (
@@ -380,23 +929,30 @@ groupRef.current.scale.z =
         0.025
 
       /*
-       * Интенсивность свечения.
+       * Different technologies
+       * have different energy levels.
        */
       const glow =
-        THREE.MathUtils.lerp(
-          0.12,
-          0.28,
-          smoothProgress,
+        0.1 +
+        (
+          blend.weights[0] *
+            0.08 +
+          blend.weights[1] *
+            0.12 +
+          blend.weights[2] *
+            0.18 +
+          blend.weights[3] *
+            0.25
         )
 
       outerMaterialRef.current.opacity =
         glow
 
       innerMaterialRef.current.opacity =
-        THREE.MathUtils.lerp(
-          0.78,
-          1,
-          smoothProgress,
+        0.78 +
+        (
+          blend.weights[3] *
+          0.2
         )
 
       outerRef.current.rotation.y +=
@@ -409,8 +965,6 @@ groupRef.current.scale.z =
 
   return (
     <group ref={groupRef}>
-      {/* Outer energy sphere */}
-
       <mesh ref={outerRef}>
         <sphereGeometry
           args={[0.68, 32, 32]}
@@ -421,14 +975,12 @@ groupRef.current.scale.z =
           color="#00C8FF"
           transparent
           opacity={0.15}
+          depthWrite={false}
           blending={
             THREE.AdditiveBlending
           }
-          depthWrite={false}
         />
       </mesh>
-
-      {/* Inner Core */}
 
       <mesh ref={innerRef}>
         <sphereGeometry
@@ -440,10 +992,10 @@ groupRef.current.scale.z =
           color="#4DE8FF"
           transparent
           opacity={0.9}
+          depthWrite={false}
           blending={
             THREE.AdditiveBlending
           }
-          depthWrite={false}
         />
       </mesh>
     </group>
@@ -451,68 +1003,7 @@ groupRef.current.scale.z =
 }
 
 /* =========================================================
-   ORBIT
-========================================================= */
-
-interface OrbitalRingProps {
-  rotation: [
-    number,
-    number,
-    number,
-  ]
-  scale?: number
-  speed: number
-}
-
-function OrbitalRing({
-  rotation,
-  scale = 1,
-  speed,
-}: OrbitalRingProps) {
-  const ringRef =
-    useRef<THREE.Mesh>(null)
-
-  useFrame(
-    (_, delta) => {
-      if (!ringRef.current) {
-        return
-      }
-
-      ringRef.current.rotation.z +=
-        delta * speed
-    },
-  )
-
-  return (
-    <mesh
-      ref={ringRef}
-      rotation={rotation}
-      scale={scale}
-    >
-      <torusGeometry
-        args={[
-          1.45,
-          0.008,
-          8,
-          160,
-        ]}
-      />
-
-      <meshBasicMaterial
-        color="#00C8FF"
-        transparent
-        opacity={0.42}
-        blending={
-          THREE.AdditiveBlending
-        }
-        depthWrite={false}
-      />
-    </mesh>
-  )
-}
-
-/* =========================================================
-   SCENE
+   COMPLETE CORE SCENE
 ========================================================= */
 
 function CoreScene({
@@ -527,15 +1018,9 @@ function CoreScene({
         return
       }
 
-      /*
-       * Медленная общая жизнь сцены.
-       */
       groupRef.current.rotation.y +=
-        delta * 0.015
+        delta * 0.012
 
-      /*
-       * Mouse tilt.
-       */
       const targetX =
         -state.pointer.y * 0.08
 
@@ -560,41 +1045,24 @@ function CoreScene({
 
   return (
     <group ref={groupRef}>
-      <ParticleField
+      <IntelligenceField
+        progressRef={progressRef}
+      />
+
+      <RoboticsStructure
+        progressRef={progressRef}
+      />
+
+      <NeuralNetwork
+        progressRef={progressRef}
+      />
+
+      <QuantumField
         progressRef={progressRef}
       />
 
       <CoreSphere
         progressRef={progressRef}
-      />
-
-      <OrbitalRing
-        rotation={[
-          0.9,
-          0.2,
-          0.3,
-        ]}
-        speed={0.12}
-      />
-
-      <OrbitalRing
-        rotation={[
-          0.2,
-          1.1,
-          -0.3,
-        ]}
-        scale={1.15}
-        speed={-0.08}
-      />
-
-      <OrbitalRing
-        rotation={[
-          1.5,
-          -0.4,
-          0.8,
-        ]}
-        scale={1.3}
-        speed={0.18}
       />
     </group>
   )
@@ -611,14 +1079,10 @@ function NexusCore({
     <div className="nexus-core">
       <Canvas
         camera={{
-          position: [
-            0,
-            0,
-            6,
-          ],
+          position: [0, 0, 6],
           fov: 42,
         }}
-        dpr={[1, 1.75]}
+        dpr={[1, 1.5]}
         gl={{
           antialias: true,
           alpha: true,
