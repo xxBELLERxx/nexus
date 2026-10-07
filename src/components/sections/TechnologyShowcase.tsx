@@ -13,6 +13,8 @@ function TechnologyShowcase() {
 
   const coreProgress = useRef(0)
 
+  const transitionSize = 0.12
+
   const activeNumberRef =
     useRef<HTMLSpanElement>(null)
 
@@ -122,14 +124,31 @@ function TechnologyShowcase() {
    * 1.00 → QUANTUM
    */
 
-  const position =
-    progress *
-    (technologies.length - 1)
+const position =
+  progress *
+  (technologies.length - 1)
 
-  const activeIndex = Math.min(
+let activeIndex = Math.min(
   Math.floor(position),
   technologies.length - 1,
 )
+
+for (
+  let boundary = 1;
+  boundary < technologies.length;
+  boundary++
+) {
+  const transitionMidpoint =
+    boundary -
+    transitionSize / 2
+
+  if (
+    position >=
+    transitionMidpoint
+  ) {
+    activeIndex = boundary
+  }
+}
 
   const technology =
     technologies[activeIndex]
@@ -224,8 +243,6 @@ function TechnologyShowcase() {
        * PANEL TRANSITIONS
        * ==========================================
        */
-
-      const transitionSize = 0.12
 
       panels.slice(1).forEach(
         (panel, index) => {
