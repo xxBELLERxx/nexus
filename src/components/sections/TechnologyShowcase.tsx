@@ -11,6 +11,8 @@ function TechnologyShowcase() {
   const sectionRef = useRef<HTMLElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
 
+  const coreProgress = useRef(0)
+
   useGSAP(
     () => {
       const panels = gsap.utils.toArray<HTMLElement>(
@@ -50,15 +52,19 @@ function TechnologyShowcase() {
       })
 
       const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: `+=${(panels.length - 1) * 1200}`,
-          pin: stageRef.current,
-          scrub: 1,
-          anticipatePin: 1,
-        },
-      })
+  scrollTrigger: {
+    trigger: sectionRef.current,
+    start: 'top top',
+    end: `+=${(panels.length - 1) * 1200}`,
+    pin: stageRef.current,
+    scrub: 1,
+    anticipatePin: 1,
+  },
+
+  onUpdate: () => {
+    coreProgress.current = timeline.progress()
+  },
+})
 
       /*
        * Progress line.
@@ -208,7 +214,9 @@ function TechnologyShowcase() {
 
         <div className="technology__showcase">
           <div className="technology__visual">
-  <NexusCore />
+  <NexusCore
+    progressRef={coreProgress}
+  />
 
   <div className="technology__visual-grid" />
 
