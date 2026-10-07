@@ -6,6 +6,9 @@ export interface Technology {
   metric: string
   metricLabel: string
   label: string
+  code: string
+  status: string
+  statusLabel: string
 }
 
 export const technologies: Technology[] = [
@@ -18,6 +21,9 @@ export const technologies: Technology[] = [
     metric: '42.8',
     metricLabel: 'PFLOPS',
     label: 'COMPUTATIONAL POWER',
+    code: 'NX-AI-01',
+    status: 'OPERATIONAL',
+    statusLabel: 'SYSTEM STATUS',
   },
 
   {
@@ -29,6 +35,9 @@ export const technologies: Technology[] = [
     metric: '18.4',
     metricLabel: 'HOURS',
     label: 'AUTONOMY',
+    code: 'NX-RB-02',
+    status: 'ACTIVE',
+    statusLabel: 'SYSTEM STATUS',
   },
 
   {
@@ -40,6 +49,9 @@ export const technologies: Technology[] = [
     metric: '2.7',
     metricLabel: 'MS',
     label: 'SIGNAL LATENCY',
+    code: 'NX-NI-03',
+    status: 'RESEARCH',
+    statusLabel: 'SYSTEM STATUS',
   },
 
   {
@@ -51,5 +63,8 @@ export const technologies: Technology[] = [
     metric: '128',
     metricLabel: 'QUBITS',
     label: 'PROCESSING CORE',
+    code: 'NX-QC-04',
+    status: 'CLASSIFIED',
+    statusLabel: 'SYSTEM STATUS',
   },
 ]

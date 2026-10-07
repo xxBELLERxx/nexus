@@ -11,15 +11,19 @@ function TechnologyShowcase() {
   const sectionRef = useRef<HTMLElement>(null)
   const stageRef = useRef<HTMLDivElement>(null)
 
-  /*
-   * Общий progress для Three.js Core.
-   *
-   * 0   = AI
-   * 0.33 = ROBOTICS
-   * 0.66 = NEURAL
-   * 1   = QUANTUM
-   */
   const coreProgress = useRef(0)
+
+  const activeNumberRef =
+    useRef<HTMLSpanElement>(null)
+
+  const activeNameRef =
+    useRef<HTMLSpanElement>(null)
+
+  const activeCodeRef =
+    useRef<HTMLSpanElement>(null)
+
+  const activeStatusRef =
+    useRef<HTMLSpanElement>(null)
 
   useGSAP(
     () => {
@@ -101,9 +105,69 @@ function TechnologyShowcase() {
          * Передаём progress в Three.js.
          */
         onUpdate: () => {
-          coreProgress.current =
-            timeline.progress()
-        },
+  const progress =
+    timeline.progress()
+
+  coreProgress.current =
+    progress
+
+  /*
+   * ==========================================
+   * ACTIVE TECHNOLOGY
+   * ==========================================
+   *
+   * 0.00 → AI
+   * 0.33 → ROBOTICS
+   * 0.66 → NEURAL
+   * 1.00 → QUANTUM
+   */
+
+  const position =
+    progress *
+    (technologies.length - 1)
+
+  const activeIndex =
+    Math.round(position)
+
+  const technology =
+    technologies[activeIndex]
+
+  if (
+    !technology ||
+    !activeNumberRef.current ||
+    !activeNameRef.current ||
+    !activeCodeRef.current ||
+    !activeStatusRef.current
+  ) {
+    return
+  }
+
+  /*
+   * Не обновляем DOM,
+   * если состояние ещё не изменилось.
+   */
+  if (
+    activeNumberRef.current.dataset.index ===
+    technology.number
+  ) {
+    return
+  }
+
+  activeNumberRef.current.dataset.index =
+    technology.number
+
+  activeNumberRef.current.textContent =
+    `${technology.number} / 04`
+
+  activeNameRef.current.textContent =
+    technology.name
+
+  activeCodeRef.current.textContent =
+    technology.code
+
+  activeStatusRef.current.textContent =
+    technology.status
+},
       })
 
       /*
@@ -329,9 +393,45 @@ function TechnologyShowcase() {
           )}
         </div>
 
-        {/* ======================================
-            SHOWCASE
-        ====================================== */}
+        <div className="technology-hud">
+  <div className="technology-hud__header">
+    <span>ACTIVE SYSTEM</span>
+
+    <span
+      ref={activeNumberRef}
+      data-index="01"
+    >
+      01 / 04
+    </span>
+  </div>
+
+  <div className="technology-hud__name">
+    <span ref={activeNameRef}>
+      ARTIFICIAL INTELLIGENCE
+    </span>
+  </div>
+
+  <div className="technology-hud__divider" />
+
+  <div className="technology-hud__row">
+    <span>NODE</span>
+
+    <span ref={activeCodeRef}>
+      NX-AI-01
+    </span>
+  </div>
+
+  <div className="technology-hud__row">
+    <span>STATUS</span>
+
+    <span
+      ref={activeStatusRef}
+      className="technology-hud__status"
+    >
+      OPERATIONAL
+    </span>
+  </div>
+</div>
 
         <div className="technology__showcase">
           <div className="technology__visual">
@@ -344,8 +444,9 @@ function TechnologyShowcase() {
             <div className="technology__visual-grid" />
 
             <div className="technology__visual-label">
-              NEXUS CORE
-            </div>
+  <span>NEXUS CORE</span>
+  <span>ONLINE</span>
+</div>
           </div>
 
           {/* ====================================
@@ -417,18 +518,22 @@ function TechnologyShowcase() {
         ====================================== */}
 
         <footer className="technology__footer">
-          <div className="technology__progress">
-            <div className="technology__progress-fill" />
-          </div>
+  <div className="technology__progress">
+    <div className="technology__progress-fill" />
+  </div>
 
-          <span>
-            SCROLL TO EXPLORE
-          </span>
+  <span>
+    SCROLL TO EXPLORE
+  </span>
 
-          <span>
-            03 / 07
-          </span>
-        </footer>
+  <span>
+    SYSTEM 04 ONLINE
+  </span>
+
+  <span>
+    03 / 07
+  </span>
+</footer>
       </div>
     </section>
   )

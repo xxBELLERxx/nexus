@@ -139,10 +139,91 @@
   letter-spacing: 0.14em;
 
   color: var(--color-text-muted);
+
+  transition:
+    color 250ms ease;
 }
 
 .technology-index__item span:first-child {
   width: 22px;
+}
+
+/* ==========================================
+   ACTIVE SYSTEM HUD
+========================================== */
+
+.technology-hud {
+  position: absolute;
+
+  top: 47%;
+  right: var(--page-padding);
+
+  z-index: 12;
+
+  width: 190px;
+}
+
+.technology-hud__header {
+  display: flex;
+  justify-content: space-between;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+
+  letter-spacing: 0.14em;
+
+  color: var(--color-text-muted);
+}
+
+.technology-hud__header span:last-child {
+  color: var(--color-accent);
+}
+
+.technology-hud__name {
+  margin-top: 14px;
+
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: -0.025em;
+
+  text-transform: uppercase;
+}
+
+.technology-hud__divider {
+  width: 100%;
+  height: 1px;
+
+  margin: 18px 0;
+
+  background: var(--color-border);
+}
+
+.technology-hud__row {
+  display: flex;
+  justify-content: space-between;
+
+  margin-top: 8px;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+
+  letter-spacing: 0.1em;
+
+  color: var(--color-text-muted);
+}
+
+.technology-hud__row span:last-child {
+  color: var(--color-text-secondary);
+
+  text-align: right;
+}
+
+.technology-hud__status {
+  color: var(--color-accent) !important;
 }
 
 /* ==========================================
@@ -233,12 +314,21 @@
   right: 15%;
   bottom: 16%;
 
-  font-family: var(--font-mono);
-  font-size: 9px;
+  z-index: 4;
 
-  letter-spacing: 0.18em;
+  display: flex;
+  gap: 14px;
+
+  font-family: var(--font-mono);
+  font-size: 8px;
+
+  letter-spacing: 0.16em;
 
   color: var(--color-text-muted);
+}
+
+.technology__visual-label span:last-child {
+  color: var(--color-accent);
 }
 
 /* ==========================================
@@ -259,11 +349,6 @@
 
   left: var(--page-padding);
 
-  /*
-   * Главное изменение:
-   * карточка опущена вниз и больше
-   * не пересекается с заголовком.
-   */
   bottom: 11%;
 
   width: min(
@@ -421,7 +506,7 @@
   display: grid;
 
   grid-template-columns:
-    1fr auto auto;
+    1fr auto auto auto;
 
   align-items: center;
 
@@ -464,7 +549,7 @@
 }
 
 /* ==========================================
-   MOBILE
+   TABLET
 ========================================== */
 
 @media (max-width: 900px) {
@@ -478,12 +563,17 @@
     display: none;
   }
 
+  .technology-hud {
+    top: 58%;
+    right: 20px;
+
+    width: 160px;
+  }
+
   .technology__visual {
     right: -15%;
 
     width: 82vw;
-
-    opacity: 0.65;
   }
 
   .technology-panel {
@@ -495,14 +585,31 @@
       calc(100vw - 40px)
     );
   }
+
+  .technology__footer {
+    left: 20px;
+    right: 20px;
+  }
 }
 
+/* ==========================================
+   MOBILE
+========================================== */
+
 @media (max-width: 600px) {
+  .technology {
+    height: 400svh;
+  }
+
   .technology__stage {
     padding:
       110px
       20px
       28px;
+  }
+
+  .technology__header {
+    font-size: 8px;
   }
 
   .technology__intro {
@@ -518,6 +625,19 @@
       10vw,
       64px
     );
+  }
+
+  .technology__intro-description {
+    width: min(
+      290px,
+      calc(100vw - 40px)
+    );
+
+    font-size: 12px;
+  }
+
+  .technology-hud {
+    display: none;
   }
 
   .technology__visual {
@@ -554,7 +674,16 @@
       1fr auto;
   }
 
-  .technology__footer span:first-of-type {
+  /*
+   * На мобильном оставляем только
+   * progress и номер секции.
+   */
+  .technology__footer span:nth-of-type(1),
+  .technology__footer span:nth-of-type(2) {
     display: none;
+  }
+
+  .technology__footer span:last-child {
+    display: block;
   }
 }
