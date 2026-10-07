@@ -163,15 +163,33 @@
 
   z-index: 2;
 
-  top: 53%;
+  top: 50%;
   right: 3%;
 
-  width: min(52vw, 760px);
+  width: min(46vw, 680px);
   aspect-ratio: 1;
 
   transform: translateY(-50%);
 
   pointer-events: auto;
+}
+
+.technology__visual::before {
+  content: '';
+
+  position: absolute;
+  inset: 10%;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(0, 200, 255, 0.06),
+      transparent 65%
+    );
+
+  pointer-events: none;
 }
 
 .technology__visual-grid {

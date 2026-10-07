@@ -41,26 +41,14 @@ const STAGE_SCALES = [
 function getStageBlend(
   progress: number,
 ): StageBlend {
-  const position = THREE.MathUtils.clamp(
-    progress * 3,
-    0,
-    3,
-  )
+  const position =
+    THREE.MathUtils.clamp(
+      progress * 3,
+      0,
+      3,
+    )
 
-  const index = Math.min(
-    Math.floor(position),
-    2,
-  )
-
-  const next = index + 1
-
-  const localProgress =
-    position - index
-
-  const smoothProgress =
-    localProgress *
-    localProgress *
-    (3 - 2 * localProgress)
+  const transitionWindow = 0.18
 
   const weights: [
     number,
@@ -69,19 +57,126 @@ function getStageBlend(
     number,
   ] = [0, 0, 0, 0]
 
+  /*
+   * Последнее состояние.
+   */
   if (position >= 3) {
     weights[3] = 1
-  } else {
-    weights[index] =
-      1 - smoothProgress
 
-    weights[next] =
-      smoothProgress
+    return {
+      index: 3,
+      next: 3,
+      progress: 1,
+      weights,
+    }
   }
 
+  const stageIndex = Math.floor(position)
+
+  const localProgress =
+    position - stageIndex
+
+  /*
+   * Начало сцены.
+   */
+  if (
+    stageIndex === 0 &&
+    localProgress <
+      transitionWindow
+  ) {
+    weights[0] = 1
+
+    return {
+      index: 0,
+      next: 1,
+      progress: 0,
+      weights,
+    }
+  }
+
+  /*
+   * Основная часть состояния —
+   * только один активный visual state.
+   */
+  if (
+    localProgress >=
+      transitionWindow &&
+    localProgress <=
+      1 - transitionWindow
+  ) {
+    weights[stageIndex] = 1
+
+    return {
+      index: stageIndex,
+      next: stageIndex + 1,
+      progress: 0,
+      weights,
+    }
+  }
+
+  /*
+   * Начинаем переход к следующему состоянию.
+   */
+  if (
+    localProgress >
+    1 - transitionWindow
+  ) {
+    const transitionProgress =
+      (
+        localProgress -
+        (1 - transitionWindow)
+      ) /
+      transitionWindow
+
+    const smoothProgress =
+      transitionProgress *
+      transitionProgress *
+      (3 -
+        2 * transitionProgress)
+
+    const nextStage =
+      stageIndex + 1
+
+    weights[stageIndex] =
+      1 - smoothProgress
+
+    weights[nextStage] =
+      smoothProgress
+
+    return {
+      index: stageIndex,
+      next: nextStage,
+      progress: smoothProgress,
+      weights,
+    }
+  }
+
+  /*
+   * Переход из предыдущего состояния
+   * в текущее.
+   */
+  const transitionProgress =
+    localProgress /
+    transitionWindow
+
+  const smoothProgress =
+    transitionProgress *
+    transitionProgress *
+    (3 -
+      2 * transitionProgress)
+
+  const previousStage =
+    stageIndex - 1
+
+  weights[previousStage] =
+    1 - smoothProgress
+
+  weights[stageIndex] =
+    smoothProgress
+
   return {
-    index,
-    next,
+    index: previousStage,
+    next: stageIndex,
     progress: smoothProgress,
     weights,
   }
@@ -396,7 +491,7 @@ function RoboticsStructure({
       {/* Mechanical modules */}
 
       {Array.from({
-        length: 8,
+        length: 6,
       }).map((_, index) => {
         const angle =
           (index / 8) *
@@ -479,7 +574,7 @@ function NeuralNetwork({
 
   const { nodePositions, linePositions } =
     useMemo(() => {
-      const count = 90
+      const count = 55
 
       const nodes =
         new Float32Array(
@@ -517,8 +612,8 @@ function NeuralNetwork({
 
       for (
         let i = 0;
-        i < count - 1;
-        i++
+        i < count - 2;
+        i+= 2
       ) {
         const a = i * 3
 
