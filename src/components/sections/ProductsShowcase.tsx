@@ -137,6 +137,19 @@ function ProductsShowcase() {
             0,
           )
 
+          timeline.to(
+  '.product-card__visual img',
+  {
+    xPercent: -8,
+    ease: 'none',
+    duration: 1,
+    stagger: {
+      each: 0.08,
+    },
+  },
+  0,
+)
+
           /*
            * ======================================
            * HEADER LINE
@@ -256,14 +269,14 @@ function ProductsShowcase() {
                   ========================== */}
 
                   <div className="product-card__visual">
-                    <div className="product-card__visual-core" />
+  <img
+    src={product.image}
+    alt={product.name}
+    loading={index === 0 ? 'eager' : 'lazy'}
+  />
 
-                    <div className="product-card__visual-ring product-card__visual-ring--one" />
-
-                    <div className="product-card__visual-ring product-card__visual-ring--two" />
-
-                    <div className="product-card__visual-grid" />
-                  </div>
+  <div className="product-card__visual-overlay" />
+</div>
 
                   {/* ==========================
                       CONTENT
