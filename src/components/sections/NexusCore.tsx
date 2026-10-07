@@ -48,7 +48,7 @@ function getStageBlend(
       3,
     )
 
-  const transitionWindow = 0.18
+  const transitionSize = 0.12
 
   const weights: [
     number,
@@ -58,7 +58,21 @@ function getStageBlend(
   ] = [0, 0, 0, 0]
 
   /*
-   * Последнее состояние.
+   * В самом начале всегда AI.
+   */
+  if (position <= 0) {
+    weights[0] = 1
+
+    return {
+      index: 0,
+      next: 0,
+      progress: 1,
+      weights,
+    }
+  }
+
+  /*
+   * В самом конце всегда QUANTUM.
    */
   if (position >= 3) {
     weights[3] = 1
@@ -71,113 +85,63 @@ function getStageBlend(
     }
   }
 
+  /*
+   * Проверяем близость к границам:
+   *
+   * 1 = AI → ROBOTICS
+   * 2 = ROBOTICS → NEURAL
+   */
+  for (let boundary = 1; boundary <= 2; boundary++) {
+    const distance =
+      Math.abs(position - boundary)
+
+    if (distance <= transitionSize) {
+      const transitionProgress =
+        (
+          position -
+          (boundary - transitionSize)
+        ) /
+        (transitionSize * 2)
+
+      const smoothProgress =
+        transitionProgress *
+        transitionProgress *
+        (3 -
+          2 * transitionProgress)
+
+      const previousStage =
+        boundary - 1
+
+      const nextStage =
+        boundary
+
+      weights[previousStage] =
+        1 - smoothProgress
+
+      weights[nextStage] =
+        smoothProgress
+
+      return {
+        index: previousStage,
+        next: nextStage,
+        progress: smoothProgress,
+        weights,
+      }
+    }
+  }
+
+  /*
+   * Если мы не в transition zone,
+   * существует только одно активное состояние.
+   */
   const stageIndex = Math.floor(position)
 
-  const localProgress =
-    position - stageIndex
-
-  /*
-   * Начало сцены.
-   */
-  if (
-    stageIndex === 0 &&
-    localProgress <
-      transitionWindow
-  ) {
-    weights[0] = 1
-
-    return {
-      index: 0,
-      next: 1,
-      progress: 0,
-      weights,
-    }
-  }
-
-  /*
-   * Основная часть состояния —
-   * только один активный visual state.
-   */
-  if (
-    localProgress >=
-      transitionWindow &&
-    localProgress <=
-      1 - transitionWindow
-  ) {
-    weights[stageIndex] = 1
-
-    return {
-      index: stageIndex,
-      next: stageIndex + 1,
-      progress: 0,
-      weights,
-    }
-  }
-
-  /*
-   * Начинаем переход к следующему состоянию.
-   */
-  if (
-    localProgress >
-    1 - transitionWindow
-  ) {
-    const transitionProgress =
-      (
-        localProgress -
-        (1 - transitionWindow)
-      ) /
-      transitionWindow
-
-    const smoothProgress =
-      transitionProgress *
-      transitionProgress *
-      (3 -
-        2 * transitionProgress)
-
-    const nextStage =
-      stageIndex + 1
-
-    weights[stageIndex] =
-      1 - smoothProgress
-
-    weights[nextStage] =
-      smoothProgress
-
-    return {
-      index: stageIndex,
-      next: nextStage,
-      progress: smoothProgress,
-      weights,
-    }
-  }
-
-  /*
-   * Переход из предыдущего состояния
-   * в текущее.
-   */
-  const transitionProgress =
-    localProgress /
-    transitionWindow
-
-  const smoothProgress =
-    transitionProgress *
-    transitionProgress *
-    (3 -
-      2 * transitionProgress)
-
-  const previousStage =
-    stageIndex - 1
-
-  weights[previousStage] =
-    1 - smoothProgress
-
-  weights[stageIndex] =
-    smoothProgress
+  weights[stageIndex] = 1
 
   return {
-    index: previousStage,
+    index: stageIndex,
     next: stageIndex,
-    progress: smoothProgress,
+    progress: 1,
     weights,
   }
 }
