@@ -126,8 +126,10 @@ function TechnologyShowcase() {
     progress *
     (technologies.length - 1)
 
-  const activeIndex =
-    Math.round(position)
+  const activeIndex = Math.min(
+  Math.floor(position),
+  technologies.length - 1,
+)
 
   const technology =
     technologies[activeIndex]
