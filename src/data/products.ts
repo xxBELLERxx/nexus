@@ -17,7 +17,7 @@ export const products: Product[] = [
     category: 'ARTIFICIAL INTELLIGENCE',
     description:
       'A personal intelligence platform designed to augment everyday human decision-making.',
-    code: 'NX-ONE-01',
+    code: '',
     metric: '99.8%',
     metricLabel: 'SYSTEM ACCURACY',
     image: `${IMAGE_BASE}/nexus-one.png`,
@@ -29,7 +29,7 @@ export const products: Product[] = [
     category: 'NEURAL INTERFACE',
     description:
       'A direct interface between biological signals and intelligent digital systems.',
-    code: 'NX-LINK-02',
+    code: '',
     metric: '2.7',
     metricLabel: 'MS LATENCY',
     image: `${IMAGE_BASE}/nexus-link.png`,
@@ -41,7 +41,7 @@ export const products: Product[] = [
     category: 'ADVANCED ROBOTICS',
     description:
       'An autonomous humanoid platform built for complex environments and human collaboration.',
-    code: 'NX-R-03',
+    code: '',
     metric: '18.4',
     metricLabel: 'HOURS AUTONOMY',
     image: `${IMAGE_BASE}/nexus-r.png`,
@@ -53,7 +53,7 @@ export const products: Product[] = [
     category: 'QUANTUM COMPUTING',
     description:
       'A next-generation computational platform designed for problems beyond classical systems.',
-    code: 'NX-CORE-04',
+    code: '',
     metric: '128',
     metricLabel: 'QUBITS',
     image: `${IMAGE_BASE}/nexus-core.png`,
