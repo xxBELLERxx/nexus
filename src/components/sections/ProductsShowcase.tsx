@@ -46,13 +46,8 @@ function ProductsShowcase() {
        * ==========================================
        * RESPONSIVE GSAP
        * ==========================================
-       *
-       * Desktop / tablet:
-       * vertical scroll → horizontal movement
-       *
-       * Mobile:
-       * обычный вертикальный список
        */
+
       const media =
         gsap.matchMedia()
 
@@ -64,21 +59,34 @@ function ProductsShowcase() {
            * HORIZONTAL DISTANCE
            * ======================================
            *
-           * Сколько реально должен пройти track,
-           * чтобы его правый край дошёл до края
-           * viewport.
+           * Здесь считаем именно расстояние,
+           * на которое track должен уйти влево.
+           *
+           * Значение всегда положительное.
            */
           const getHorizontalDistance =
             () => {
-              return -(
+              return Math.max(
                 track.scrollWidth -
-                viewport.clientWidth
+                  viewport.clientWidth,
+                0,
               )
             }
 
           /*
            * ======================================
-           * TIMELINE
+           * INITIAL POSITION
+           * ======================================
+           *
+           * Всегда начинаем слева.
+           */
+          gsap.set(track, {
+            x: 0,
+          })
+
+          /*
+           * ======================================
+           * MAIN TIMELINE
            * ======================================
            */
 
@@ -90,13 +98,11 @@ function ProductsShowcase() {
                 start: 'top top',
 
                 /*
-                 * Вертикальное расстояние
-                 * равно горизонтальному пути.
+                 * Вертикальная длина scroll
+                 * равна длине horizontal movement.
                  */
                 end: () =>
-                  `+=${Math.abs(
-                    getHorizontalDistance(),
-                  )}`,
+                  `+=${getHorizontalDistance()}`,
 
                 pin: stage,
 
@@ -105,50 +111,47 @@ function ProductsShowcase() {
                 anticipatePin: 1,
 
                 invalidateOnRefresh: true,
-
-                /*
-                 * При изменении размеров
-                 * браузера пересчитываем layout.
-                 */
-                onRefresh: () => {
-                  gsap.set(
-                    track,
-                    {
-                      x: getHorizontalDistance(),
-                    },
-                  )
-                },
               },
             })
 
           /*
            * ======================================
-           * HORIZONTAL TRACK
+           * HORIZONTAL MOVEMENT
            * ======================================
            */
 
           timeline.to(
             track,
             {
-              x: getHorizontalDistance,
+              x: () =>
+                -getHorizontalDistance(),
+
               ease: 'none',
+
               duration: 1,
             },
             0,
           )
 
+          /*
+           * ======================================
+           * IMAGE PARALLAX
+           * ======================================
+           *
+           * Картинки внутри карточек слегка
+           * двигаются относительно самого track.
+           */
           timeline.to(
-  '.product-card__visual img',
-  {
-    xPercent: -8,
-    ease: 'none',
-    duration: 1,
-    stagger: {
-      each: 0.08,
-    },
-  },
-  0,
-)
+            '.product-card__visual img',
+            {
+              xPercent: -8,
+
+              ease: 'none',
+
+              duration: 1,
+            },
+            0,
+          )
 
           /*
            * ======================================
@@ -160,11 +163,23 @@ function ProductsShowcase() {
             '.products__header-line',
             {
               scaleX: 1,
+
               duration: 1,
+
               ease: 'none',
             },
             0,
           )
+
+          /*
+           * ======================================
+           * CLEANUP
+           * ======================================
+           */
+
+          return () => {
+            timeline.kill()
+          }
         },
       )
 
@@ -269,14 +284,18 @@ function ProductsShowcase() {
                   ========================== */}
 
                   <div className="product-card__visual">
-  <img
-    src={product.image}
-    alt={product.name}
-    loading={index === 0 ? 'eager' : 'lazy'}
-  />
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      loading={
+                        index === 0
+                          ? 'eager'
+                          : 'lazy'
+                      }
+                    />
 
-  <div className="product-card__visual-overlay" />
-</div>
+                    <div className="product-card__visual-overlay" />
+                  </div>
 
                   {/* ==========================
                       CONTENT
