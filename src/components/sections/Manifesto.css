@@ -1,7 +1,22 @@
+/* ==========================================
+   MANIFESTO
+========================================== */
+
+.manifesto,
+.manifesto *,
+.manifesto *::before,
+.manifesto *::after {
+  box-sizing: border-box;
+}
+
 .manifesto {
   position: relative;
 
-  height: 460vh;
+  /*
+   * 500svh вместе с end: 'bottom bottom'
+   * оставляет 400svh для ScrollTrigger.
+   */
+  height: 500svh;
 
   background:
     radial-gradient(
@@ -11,6 +26,10 @@
     ),
     var(--color-bg);
 }
+
+/* ==========================================
+   PINNED STAGE
+========================================== */
 
 .manifesto__stage {
   position: relative;
@@ -26,24 +45,42 @@
   overflow: hidden;
 }
 
+/* ==========================================
+   HEADER
+========================================== */
+
 .manifesto__header {
   position: relative;
+
   z-index: 10;
 
   display: flex;
+
   justify-content: space-between;
+  align-items: center;
+
+  gap: 20px;
 
   font-family: var(--font-mono);
+
   font-size: 10px;
 
   letter-spacing: 0.12em;
 
-  color: var(--color-text-muted);
+  color:
+    var(--color-text-muted);
 }
 
 .manifesto__header span:first-child {
-  color: var(--color-accent);
+  flex-shrink: 0;
+
+  color:
+    var(--color-accent);
 }
+
+/* ==========================================
+   MAIN LAYOUT
+========================================== */
 
 .manifesto__layout {
   position: relative;
@@ -52,55 +89,84 @@
   height: calc(100% - 20px);
 
   display: grid;
-  grid-template-columns: 1fr 1fr;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1fr);
 
   gap: 7vw;
 
   align-items: center;
 }
 
+/* ==========================================
+   CONTENT
+========================================== */
+
 .manifesto__content {
   position: relative;
+
   z-index: 5;
+
+  min-width: 0;
 }
 
 .manifesto__eyebrow {
-  margin: 0 0 28px;
+  margin:
+    0
+    0
+    28px;
 
   font-family: var(--font-mono);
-  font-size: 10px;
+
+  font-size: 11px;
+
+  line-height: 1.5;
 
   letter-spacing: 0.2em;
 
-  color: var(--color-accent);
+  color:
+    var(--color-accent);
 }
+
+/* ==========================================
+   TITLE
+========================================== */
 
 .manifesto__title {
   margin: 0;
 
   font-family: var(--font-display);
-  font-size: clamp(
-    52px,
-    6vw,
-    100px
-  );
+
+  font-size:
+    clamp(
+      52px,
+      6vw,
+      100px
+    );
 
   font-weight: 400;
 
   line-height: 0.9;
+
   letter-spacing: -0.055em;
 
   text-transform: uppercase;
 }
 
+/* ==========================================
+   CONCEPT WORD
+========================================== */
+
 .manifesto__word-container {
   position: relative;
 
-  height: clamp(
-    70px,
-    8vw,
-    120px
-  );
+  height:
+    clamp(
+      70px,
+      8vw,
+      120px
+    );
 
   margin-top: 18px;
 }
@@ -111,12 +177,18 @@
   left: 0;
   top: 0;
 
+  display: block;
+
+  max-width: 100%;
+
   font-family: var(--font-display);
-  font-size: clamp(
-    48px,
-    6vw,
-    96px
-  );
+
+  font-size:
+    clamp(
+      48px,
+      6vw,
+      96px
+    );
 
   font-weight: 400;
 
@@ -124,13 +196,24 @@
 
   letter-spacing: -0.05em;
 
-  color: var(--color-accent);
+  overflow-wrap: anywhere;
+
+  color:
+    var(--color-accent);
+
+  will-change:
+    transform,
+    opacity;
 }
+
+/* ==========================================
+   DESCRIPTION
+========================================== */
 
 .manifesto__description-container {
   position: relative;
 
-  min-height: 70px;
+  min-height: 94px;
 
   margin-top: 18px;
 }
@@ -141,40 +224,69 @@
   left: 0;
   top: 0;
 
-  width: min(380px, 90%);
+  width:
+    min(
+      420px,
+      100%
+    );
 
   opacity: 0;
+
+  will-change:
+    transform,
+    opacity;
 }
 
 .manifesto__description-label {
   display: block;
 
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 
   font-family: var(--font-mono);
-  font-size: 9px;
+
+  font-size: 10px;
+
+  line-height: 1.5;
 
   letter-spacing: 0.16em;
 
-  color: var(--color-text-muted);
+  color:
+    var(--color-text-muted);
 }
 
 .manifesto__description p {
   margin: 0;
 
-  font-size: 14px;
-  line-height: 1.7;
+  font-family: var(--font-body);
 
-  color: var(--color-text-secondary);
+  font-size: 15px;
+
+  line-height: 1.75;
+
+  color:
+    var(--color-text-secondary);
 }
+
+/* ==========================================
+   VISUAL
+========================================== */
 
 .manifesto__visual {
   position: relative;
 
   width: 100%;
-  height: min(62vh, 680px);
 
-  border: 1px solid var(--color-border);
+  height:
+    min(
+      62vh,
+      680px
+    );
+
+  min-width: 0;
+
+  border:
+    1px solid
+    var(--color-border);
 
   overflow: hidden;
 
@@ -184,10 +296,17 @@
       rgba(0, 200, 255, 0.06),
       rgba(9, 13, 18, 0.8)
     );
+
+  isolation: isolate;
 }
+
+/* ==========================================
+   VISUAL GRID
+========================================== */
 
 .manifesto__visual-grid {
   position: absolute;
+
   inset: 0;
 
   z-index: 3;
@@ -217,32 +336,52 @@
     );
 }
 
+/* ==========================================
+   VISUAL INNER
+========================================== */
+
 .manifesto__visual-inner {
   position: absolute;
+
   inset: -5%;
 
   will-change: transform;
 }
 
+/* ==========================================
+   CONCEPT IMAGES
+========================================== */
+
 .manifesto__image {
   position: absolute;
+
   inset: 0;
 
   overflow: hidden;
+
+  will-change:
+    transform,
+    opacity;
 }
 
 .manifesto__image img {
+  display: block;
+
   width: 100%;
   height: 100%;
 
   object-fit: cover;
+  object-position: center;
 
   transform: scale(1.03);
 }
 
 .manifesto__image-overlay {
   position: absolute;
+
   inset: 0;
+
+  pointer-events: none;
 
   background:
     linear-gradient(
@@ -251,6 +390,10 @@
       rgba(5, 7, 10, 0.25)
     );
 }
+
+/* ==========================================
+   VISUAL META
+========================================== */
 
 .manifesto__visual-meta {
   position: absolute;
@@ -262,15 +405,27 @@
   bottom: 20px;
 
   display: flex;
+
   justify-content: space-between;
+  align-items: center;
+
+  gap: 16px;
 
   font-family: var(--font-mono);
+
   font-size: 9px;
+
+  line-height: 1.5;
 
   letter-spacing: 0.14em;
 
-  color: var(--color-text-muted);
+  color:
+    var(--color-text-muted);
 }
+
+/* ==========================================
+   FOOTER
+========================================== */
 
 .manifesto__footer {
   position: absolute;
@@ -284,82 +439,484 @@
   display: grid;
 
   grid-template-columns:
-    auto 1fr auto;
+    auto
+    minmax(20px, 1fr)
+    auto;
 
   gap: 24px;
 
   align-items: center;
 
   font-family: var(--font-mono);
+
   font-size: 9px;
 
   letter-spacing: 0.14em;
 
-  color: var(--color-text-muted);
+  color:
+    var(--color-text-muted);
+}
+
+.manifesto__footer span:first-child {
+  white-space: nowrap;
 }
 
 .manifesto__footer span:last-child {
-  color: var(--color-accent);
+  color:
+    var(--color-accent);
+
+  white-space: nowrap;
 }
 
 .manifesto__footer-line {
   height: 1px;
 
-  background: var(--color-border);
+  background:
+    var(--color-border);
 }
 
+/* ==========================================
+   TABLET
+========================================== */
+
 @media (max-width: 900px) {
+  .manifesto {
+    /*
+     * 560svh section height =
+     * 460svh pinned scroll distance.
+     */
+    height: 560svh;
+  }
+
+  .manifesto__stage {
+    padding:
+      100px
+      clamp(24px, 5vw, 48px)
+      64px;
+  }
+
   .manifesto__layout {
-    grid-template-columns: 1fr;
-    gap: 30px;
+    grid-template-columns:
+      minmax(0, 1fr);
+
+    grid-template-rows:
+      auto
+      auto;
+
+    gap: 22px;
+
+    align-content: center;
+    align-items: stretch;
+
+    height: calc(100% - 20px);
+  }
+
+  .manifesto__content {
+    width: 100%;
+  }
+
+  .manifesto__eyebrow {
+    margin-bottom: 18px;
+
+    font-size: 10px;
+  }
+
+  .manifesto__title {
+    font-size:
+      clamp(
+        44px,
+        8vw,
+        72px
+      );
+  }
+
+  .manifesto__word-container {
+    height:
+      clamp(
+        58px,
+        8vw,
+        78px
+      );
+
+    margin-top: 14px;
+  }
+
+  .manifesto__word {
+    font-size:
+      clamp(
+        40px,
+        8vw,
+        66px
+      );
+
+    overflow-wrap: anywhere;
+  }
+
+  .manifesto__description-container {
+    min-height: 86px;
+
+    margin-top: 12px;
+  }
+
+  .manifesto__description {
+    width:
+      min(
+        520px,
+        100%
+      );
+  }
+
+  .manifesto__description p {
+    font-size: 15px;
+
+    line-height: 1.7;
   }
 
   .manifesto__visual {
-    height: 42vh;
+    height:
+      clamp(
+        170px,
+        25svh,
+        260px
+      );
+
+    margin-top: 0;
+  }
+
+  .manifesto__visual-meta {
+    left: 16px;
+    right: 16px;
+    bottom: 14px;
+
+    font-size: 8px;
+  }
+
+  .manifesto__footer {
+    bottom: 22px;
+
+    gap: 16px;
+
+    font-size: 8px;
+  }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+  .manifesto {
+    /*
+     * Longer scroll range for phones.
+     * end: 'bottom bottom' will use
+     * 550svh for the pinned timeline.
+     */
+    height: 650svh;
+  }
+
+  /* ========================================
+     STAGE
+  ======================================== */
+
+  .manifesto__stage {
+    padding:
+      88px
+      20px
+      58px;
+  }
+
+  /* ========================================
+     HEADER
+  ======================================== */
+
+  .manifesto__header {
+    gap: 12px;
+
+    font-size: 9px;
+
+    letter-spacing: 0.1em;
+  }
+
+  /* ========================================
+     LAYOUT
+  ======================================== */
+
+  .manifesto__layout {
+    grid-template-columns:
+      minmax(0, 1fr);
+
+    grid-template-rows:
+      auto
+      auto;
+
+    gap: 12px;
+
+    align-content: center;
+    align-items: stretch;
+
+    height: calc(100% - 12px);
+  }
+
+  /* ========================================
+     CONTENT
+  ======================================== */
+
+  .manifesto__content {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .manifesto__eyebrow {
+    margin:
+      0
+      0
+      14px;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    letter-spacing: 0.15em;
+  }
+
+  /* ========================================
+     TITLE
+  ======================================== */
+
+  .manifesto__title {
+    font-size:
+      clamp(
+        36px,
+        10vw,
+        56px
+      );
+
+    line-height: 0.93;
+
+    letter-spacing: -0.05em;
+  }
+
+  /* ========================================
+     CONCEPT WORD
+  ======================================== */
+
+  .manifesto__word-container {
+    height:
+      clamp(
+        44px,
+        12vw,
+        62px
+      );
+
+    margin-top: 12px;
+  }
+
+  .manifesto__word {
+    max-width: 100%;
+
+    font-size:
+      clamp(
+        34px,
+        9.4vw,
+        54px
+      );
+
+    line-height: 1;
+
+    letter-spacing: -0.045em;
+
+    overflow-wrap: anywhere;
+  }
+
+  /* ========================================
+     DESCRIPTION
+  ======================================== */
+
+  .manifesto__description-container {
+    min-height: 84px;
 
     margin-top: 10px;
   }
 
-  .manifesto__title {
-    font-size: clamp(
-      46px,
-      11vw,
-      72px
-    );
+  .manifesto__description {
+    width: 100%;
   }
 
-  .manifesto__word {
-    font-size: clamp(
-      42px,
-      10vw,
-      68px
-    );
-  }
-}
+  .manifesto__description-label {
+    margin-bottom: 8px;
 
-@media (max-width: 600px) {
-  .manifesto__stage {
-    padding:
-      110px
-      20px
-      28px;
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    letter-spacing: 0.13em;
   }
 
-  .manifesto__header {
-    font-size: 8px;
+  .manifesto__description p {
+    font-size: 15px;
+
+    line-height: 1.65;
+
+    letter-spacing: 0.005em;
   }
+
+  /* ========================================
+     VISUAL
+  ======================================== */
 
   .manifesto__visual {
-    height: 32vh;
+    width: 100%;
+
+    height:
+      clamp(
+        125px,
+        22svh,
+        175px
+      );
+
+    min-height: 0;
+
+    margin-top: 0;
   }
+
+  .manifesto__visual-inner {
+    inset: -3%;
+  }
+
+  .manifesto__image img {
+    object-position: center;
+  }
+
+  .manifesto__visual-grid {
+    background-size: 35px 35px;
+
+    opacity: 0.25;
+  }
+
+  .manifesto__visual-meta {
+    left: 12px;
+    right: 12px;
+    bottom: 10px;
+
+    gap: 8px;
+
+    font-size: 7px;
+
+    letter-spacing: 0.1em;
+  }
+
+  /* ========================================
+     FOOTER
+  ======================================== */
 
   .manifesto__footer {
     left: 20px;
     right: 20px;
-    bottom: 24px;
+    bottom: 18px;
+
+    grid-template-columns:
+      auto
+      minmax(12px, 1fr)
+      auto;
+
+    gap: 10px;
+
+    font-size: 7px;
+
+    letter-spacing: 0.08em;
   }
 
   .manifesto__footer-line {
-    display: none;
+    display: block;
+  }
+}
+
+/* ==========================================
+   SHORT MOBILE VIEWPORTS
+========================================== */
+
+@media (max-width: 600px) and (max-height: 680px) {
+  .manifesto__stage {
+    padding:
+      78px
+      20px
+      48px;
+  }
+
+  .manifesto__layout {
+    gap: 8px;
+  }
+
+  .manifesto__eyebrow {
+    margin-bottom: 10px;
+
+    font-size: 9px;
+  }
+
+  .manifesto__title {
+    font-size:
+      clamp(
+        34px,
+        9vw,
+        48px
+      );
+  }
+
+  .manifesto__word-container {
+    height: 42px;
+
+    margin-top: 8px;
+  }
+
+  .manifesto__word {
+    font-size:
+      clamp(
+        32px,
+        8.8vw,
+        46px
+      );
+  }
+
+  .manifesto__description-container {
+    min-height: 76px;
+
+    margin-top: 8px;
+  }
+
+  .manifesto__description-label {
+    margin-bottom: 6px;
+
+    font-size: 9px;
+  }
+
+  .manifesto__description p {
+    font-size: 14px;
+
+    line-height: 1.55;
+  }
+
+  .manifesto__visual {
+    height: 118px;
+  }
+
+  .manifesto__visual-meta {
+    bottom: 8px;
+  }
+
+  .manifesto__footer {
+    bottom: 14px;
+  }
+}
+
+/* ==========================================
+   REDUCED MOTION
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto__visual-inner,
+  .manifesto__image,
+  .manifesto__word,
+  .manifesto__description {
+    will-change: auto;
   }
 }
