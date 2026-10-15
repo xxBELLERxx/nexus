@@ -240,10 +240,6 @@ function Careers() {
           comfortable working at the edge of what is
           currently possible.
         </p>
-
-        <span className="careers__statement-mark">
-          +
-        </span>
       </div>
 
       <section className="careers__positions">
