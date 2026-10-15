@@ -280,7 +280,7 @@ function Careers() {
                 </div>
 
                 <span className="careers__position-arrow">
-                  ↗
+                  ↓
                 </span>
               </div>
 
@@ -314,19 +314,6 @@ function Careers() {
                     {position.skills}
                   </span>
                 </div>
-
-                <button
-                  type="button"
-                  className="careers__position-apply"
-                >
-                  <span>
-                    VIEW POSITION
-                  </span>
-
-                  <span>
-                    ↗
-                  </span>
-                </button>
               </div>
             </article>
           ))}
