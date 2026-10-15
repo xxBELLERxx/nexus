@@ -648,7 +648,7 @@ function Research() {
         </div>
 
         <div className="research__areas">
-          {researchAreas.map((area, index) => (
+          {researchAreas.map((area) => (
             <article
               key={area.number}
               className="research-card"
