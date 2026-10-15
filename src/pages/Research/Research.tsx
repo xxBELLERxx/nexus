@@ -405,15 +405,6 @@ function ResearchModal({
             <span>
               NEXUS // R&amp;D DIVISION
             </span>
-
-            <button
-              type="button"
-              className="research-modal__return"
-              onClick={closeModal}
-            >
-              <span>RETURN TO RESEARCH</span>
-              <span aria-hidden="true">↗</span>
-            </button>
           </footer>
         </div>
       </section>

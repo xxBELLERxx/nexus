@@ -315,32 +315,24 @@ function Company() {
           </span>
         </div>
 
-        <div className="company__principles-list">
-          {principles.map((principle) => (
-            <article
-              key={principle.number}
-              className="company__principle"
-            >
-              <div className="company__principle-number">
-                {principle.number}
-              </div>
+<div className="company__principles-list">
+  {principles.map((principle) => (
+    <article
+      key={principle.number}
+      className="company__principle"
+    >
+      <span className="company__principle-number">
+        {principle.number}
+      </span>
 
-              <div className="company__principle-main">
-                <h2>
-                  {principle.title}
-                </h2>
+      <div className="company__principle-main">
+        <h2>{principle.title}</h2>
 
-                <p>
-                  {principle.description}
-                </p>
-              </div>
-
-              <span className="company__principle-arrow">
-                ↗
-              </span>
-            </article>
-          ))}
-        </div>
+        <p>{principle.description}</p>
+      </div>
+    </article>
+  ))}
+</div>
       </section>
 
       <section
