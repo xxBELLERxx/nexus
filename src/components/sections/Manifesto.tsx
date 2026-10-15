@@ -77,10 +77,6 @@ function Manifesto() {
         return
       }
 
-      /* ========================================
-         INITIAL STATE
-      ======================================== */
-
       gsap.set(words, {
         autoAlpha: 0,
         y: 36,
@@ -111,44 +107,20 @@ function Manifesto() {
         y: 0,
       })
 
-      /* ========================================
-         SCROLL TIMELINE
-      ======================================== */
-
       const transitionGap = 1.25
       const wordDuration = 0.8
       const imageDuration = 0.9
       const descriptionDuration = 0.65
       const overlap = 0.12
 
-      /*
-       * Each transition gets its own time slot.
-       * This prevents chained tweens from
-       * unintentionally stretching the sequence.
-       */
-
       const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-
-          /*
-           * The scroll distance is tied to the
-           * actual section height.
-           *
-           * CSS and ScrollTrigger therefore
-           * remain aligned on different screens.
-           */
           end: 'bottom bottom',
 
           pin: stage,
           pinSpacing: true,
-
-          /*
-           * Direct scrubbing avoids a delayed
-           * animation on mobile when the user
-           * reaches the end of the section.
-           */
           scrub: true,
 
           anticipatePin: 1,
@@ -236,8 +208,6 @@ function Manifesto() {
           start,
         )
 
-        /* DESCRIPTION IN */
-
         timeline.to(
           currentDescription,
           {
@@ -249,17 +219,6 @@ function Manifesto() {
           start + overlap,
         )
       })
-
-      /* ========================================
-         FINAL STATE HOLD
-      ======================================== */
-
-      /*
-       * The final transition completes at this
-       * point. We extend the timeline beyond it,
-       * so EVOLUTION remains visible at the end
-       * instead of changing at the last instant.
-       */
 
       const finalTransitionEnd =
         (concepts.length - 2) * transitionGap +

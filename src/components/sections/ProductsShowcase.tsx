@@ -17,10 +17,6 @@ function ProductsShowcase() {
   const viewportRef = useRef<HTMLDivElement>(null)
   const trackRef = useRef<HTMLDivElement>(null)
 
-  /* ==========================================
-     MODAL STATE
-  ========================================== */
-
   const [activeProduct, setActiveProduct] =
     useState<Product | null>(null)
 
@@ -31,10 +27,6 @@ function ProductsShowcase() {
 
   const openButtonRef = useRef<HTMLButtonElement | null>(null)
   const closingRef = useRef(false)
-
-  /* ==========================================
-     HORIZONTAL SCROLL
-  ========================================== */
 
   useGSAP(
     () => {
@@ -116,10 +108,6 @@ function ProductsShowcase() {
     },
   )
 
-  /* ==========================================
-     OPEN MODAL
-  ========================================== */
-
   const openModal = (
     product: Product,
     trigger: HTMLButtonElement,
@@ -128,10 +116,6 @@ function ProductsShowcase() {
     openButtonRef.current = trigger
     setActiveProduct(product)
   }
-
-  /* ==========================================
-     CLOSE MODAL
-  ========================================== */
 
   const closeModal = useCallback(() => {
     if (!activeProduct || closingRef.current) {
@@ -176,10 +160,6 @@ function ProductsShowcase() {
         0,
       )
   }, [activeProduct])
-
-  /* ==========================================
-     MODAL OPEN ANIMATION
-  ========================================== */
 
   useEffect(() => {
     if (!activeProduct || !modalRef.current) {
@@ -241,10 +221,6 @@ function ProductsShowcase() {
       context.revert()
     }
   }, [activeProduct])
-
-  /* ==========================================
-     KEYBOARD / SCROLL ACCESSIBILITY
-  ========================================== */
 
   useEffect(() => {
     if (!activeProduct) {
@@ -315,10 +291,6 @@ function ProductsShowcase() {
       )
     }
   }, [activeProduct, closeModal])
-
-  /* ==========================================
-     RENDER
-  ========================================== */
 
   return (
     <section
@@ -469,10 +441,6 @@ function ProductsShowcase() {
           </span>
         </footer>
       </div>
-
-      {/* ========================================
-          PRODUCT MODAL
-      ======================================== */}
 
       {activeProduct && (
         <div
